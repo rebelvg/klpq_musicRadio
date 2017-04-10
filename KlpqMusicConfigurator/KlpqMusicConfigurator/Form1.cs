@@ -42,7 +42,7 @@ namespace KlpqMusicConfigurator
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string finalConfig = "class CfgPatches {\n    class klpq_musicRadio_files {\n        units[] = {};\n        weapons[] = {};\n        requiredVersion = 1;\n        requiredAddons[] = {};\n    };\n};";
+            string finalConfig = "class CfgPatches {\n    class klpq_musicRadio_configs {\n        units[] = {};\n        weapons[] = {};\n        requiredVersion = 1;\n        requiredAddons[] = {};\n    };\n};";
 
             finalConfig += "\n\n";
 
@@ -91,17 +91,13 @@ namespace KlpqMusicConfigurator
                 string className = "klpq_musicRadio_" + X.Index;
                 string path = Path.GetFileName(path_textBox.Text) + Path.DirectorySeparatorChar + X.Text;
 
-                finalConfig += "\n    class " + className + " {\n        sound[] = {\"" + path + "\", db+6, 1, 50};\n        titles[] = {};\n    };";
-                finalConfig += "\n    class " + className + "_loud {\n        sound[] = {\"" + path + "\", db+12, 1, 250};\n        titles[] = {};\n    };";
+                finalConfig += "\n    class " + className + " {\n        sound[] = {\"" + path + "\", db+6, 1, 100};\n        titles[] = {};\n    };";
+                finalConfig += "\n    class " + className + "_loud {\n        sound[] = {\"" + path + "\", db+12, 1, 500};\n        titles[] = {};\n    };";
             }
 
             finalConfig += "\n};\n";
 
             richTextBox1.Text = finalConfig;
-
-            File.WriteAllText(path_textBox.Text + Path.DirectorySeparatorChar + "config.cpp", finalConfig);
-
-            MessageBox.Show("Config saved to " + path_textBox.Text + Path.DirectorySeparatorChar + "config.cpp");
         }
     }
 }
