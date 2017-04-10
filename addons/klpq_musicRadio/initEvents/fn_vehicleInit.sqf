@@ -12,7 +12,7 @@ if (isServer) then {
     _vehicle setVariable ["klpq_musicRadio_radioIsOn", false, true];
     _vehicle setVariable ["klpq_musicRadio_loudRadioIsOn", false, true];
 
-    klpq_musicRadio_loudRadios = klpq_musicRadio_loudRadios + [_vehicle];
+    klpq_musicRadio_loudRadios pushBack _vehicle;
 
     _vehicle addMPEventHandler ["MPKilled", {
         params ["_vehicle"];

@@ -8,6 +8,48 @@ if (!klpq_musicRadio_enable) exitWith {};
     player addEventHandler ["Respawn", {
         playMusic "";
     }];
+
+    player addEventHandler ["GetInMan", {
+        params ["_vehicle"];
+
+        _backpack = backpackContainer _vehicle;
+
+        [_backpack] spawn klpq_musicRadio_fnc_stopLoudRadio;
+    }];
+
+    _action = ["klpq_musicRadio_action_turnLoudRadioOff", "Turn Backpack Speaker Off", "klpq_musicRadio\loud_off.paa", {
+        params ["_vehicle"];
+
+        _backpack = backpackContainer _vehicle;
+
+        [_backpack] spawn klpq_musicRadio_fnc_stopLoudRadio;
+    }, {
+        params ["_vehicle", "_player"];
+
+        _backpack = backpackContainer _vehicle;
+
+        _isPlaying = _backpack getVariable ["klpq_musicRadio_loudRadioIsOn", false];
+
+        _isPlaying
+    }] call ace_interact_menu_fnc_createAction;
+    [player, 1, ["ACE_SelfActions", "ACE_Equipment"], _action] call ace_interact_menu_fnc_addActionToObject;
+
+    _action = ["klpq_musicRadio_action_turnLoudRadioOn", "Turn Backpack Speaker On", "klpq_musicRadio\loud_on.paa", {
+        params ["_vehicle"];
+
+        _backpack = backpackContainer _vehicle;
+
+        [_backpack] spawn klpq_musicRadio_fnc_startLoudRadio;
+    }, {
+        params ["_vehicle", "_player"];
+
+        _backpack = backpackContainer _vehicle;
+
+        _isPlaying = _backpack getVariable ["klpq_musicRadio_loudRadioIsOn", false];
+
+        !_isPlaying && _backpack getVariable ["klpq_musicRadio_actionAdded", false] && vehicle _vehicle == _vehicle
+    }] call ace_interact_menu_fnc_createAction;
+    [player, 1, ["ACE_SelfActions", "ACE_Equipment"], _action] call ace_interact_menu_fnc_addActionToObject;
 };
 
 [] spawn {
@@ -36,8 +78,11 @@ if (!klpq_musicRadio_enable) exitWith {};
 
     if (count _musicArray == 0) exitWith {};
 
+    klpq_musicRadio_startRadioSongs = klpq_musicRadio_startRadioSongs select {getText (configFile >> "CfgMusic" >> _x >> "tag") == "klpq_musicRadio"};
+
     while {true} do {
-        klpq_musicRadio_radioSongs = [_musicArray, 4 * count _musicArray] call KK_fnc_arrayShufflePlus;
+        _shuffledMusicArray = [_musicArray, 4 * count _musicArray] call KK_fnc_arrayShufflePlus;
+        _shuffledMusicArray = klpq_musicRadio_startRadioSongs + _shuffledMusicArray;
 
         {
             klpq_musicRadio_nowPlaying = _x;
@@ -59,6 +104,6 @@ if (!klpq_musicRadio_enable) exitWith {};
             } forEach klpq_musicRadio_loudRadios;
 
             sleep _songLength;
-        } forEach klpq_musicRadio_radioSongs;
+        } forEach _shuffledMusicArray;
     };
 };

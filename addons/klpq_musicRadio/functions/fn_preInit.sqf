@@ -59,9 +59,9 @@ klpq_musicRadio_fnc_startLoudRadio = {
     if (klpq_musicRadio_nowPlaying == "") exitWith {};
 
     if (_vehicle isKindOf "air") then {
-        [[_hiddenRadio, klpq_musicRadio_nowPlaying + "_loud"], "say3d"] call BIS_fnc_MP;
+        [[_hiddenRadio, klpq_musicRadio_nowPlaying + "_loud"], "say3D"] call BIS_fnc_MP;
     } else {
-        [[_hiddenRadio, klpq_musicRadio_nowPlaying], "say3d"] call BIS_fnc_MP;
+        [[_hiddenRadio, klpq_musicRadio_nowPlaying], "say3D"] call BIS_fnc_MP;
     };
 };
 
@@ -95,6 +95,10 @@ if (isNil "klpq_musicRadio_timeStarted") then {
 
 if (isNil "klpq_musicRadio_nowPlaying") then {
     klpq_musicRadio_nowPlaying = "";
+};
+
+if (isNil "klpq_musicRadio_startRadioSongs") then {
+    klpq_musicRadio_startRadioSongs = [];
 };
 
 if (isNil "klpq_musicRadio_radioSongs") then {
