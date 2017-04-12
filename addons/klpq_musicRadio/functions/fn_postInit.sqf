@@ -59,6 +59,8 @@ if (!klpq_musicRadio_enable) exitWith {};
 
     _musicArray = klpq_musicRadio_radioSongs;
 
+    _musicArray = _musicArray select {getText (configFile >> "CfgMusic" >> _x >> "tag") == "klpq_musicRadio"};
+
     if (count _musicArray == 0) then {
         {
             _searchString = format ["getText (_x >> 'theme') == '%1'", _x];
@@ -77,6 +79,8 @@ if (!klpq_musicRadio_enable) exitWith {};
     _musicArray = _musicArray select {getText (configFile >> "CfgMusic" >> _x >> "tag") == "klpq_musicRadio"};
 
     if (count _musicArray == 0) exitWith {};
+
+    klpq_musicRadio_radioSongs = _musicArray;
 
     klpq_musicRadio_startRadioSongs = klpq_musicRadio_startRadioSongs select {getText (configFile >> "CfgMusic" >> _x >> "tag") == "klpq_musicRadio"};
 
