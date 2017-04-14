@@ -3,6 +3,9 @@ KLPQ MUSIC RADIO MOD SOURCES by KLPQ.men
 Rebel - configs, scripting.
 Facel - icons.
 
+Threads.
+https://forums.bistudio.com/forums/topic/203641-klpq-music-radio/
+
 Usage.
 klpq_musicRadio_enable - bool, enables music radio.
 klpq_musicRadio_radioThemes - array, sets themes for music radio, leave empty for all themes.
