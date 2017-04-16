@@ -1,9 +1,9 @@
 klpq_musicRadio_fnc_playMusic = {
-    if (klpq_musicRadio_radioVolume == -1) exitWith {};
+    if (klpq_musicRadio_radioVolumePercent == 0) exitWith {};
 
     playMusic "";
     playMusic [klpq_musicRadio_nowPlaying, CBA_missionTime - klpq_musicRadio_timeStarted];
-    0 fadeMusic klpq_musicRadio_radioVolume;
+    0 fadeMusic (klpq_musicRadio_radioVolumePercent / 100);
 
     _artist = getText (configFile >> "CfgMusic" >> klpq_musicRadio_nowPlaying >> "artist");
     _title = getText (configFile >> "CfgMusic" >> klpq_musicRadio_nowPlaying >> "title");
@@ -150,8 +150,8 @@ if (isNil "klpq_musicRadio_enable") then {
     klpq_musicRadio_enable = true;
 };
 
-if (isNil "klpq_musicRadio_radioVolume") then {
-    klpq_musicRadio_radioVolume = 1;
+if (isNil "klpq_musicRadio_radioVolumePercent") then {
+    klpq_musicRadio_radioVolumePercent = 100;
 };
 
 if (isNil "klpq_musicRadio_loudspeakerVolume") then {

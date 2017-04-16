@@ -52,13 +52,16 @@ if (!klpq_musicRadio_enable) exitWith {};
     [player, 1, ["ACE_SelfActions", "ACE_Equipment"], _action] call ace_interact_menu_fnc_addActionToObject;
 
     [
-    "klpq_musicRadio_radioVolume",
-    "LIST",
+    "klpq_musicRadio_radioVolumePercent",
+    "SLIDER",
     "Radio Volume",
     "KLPQ Music Radio",
-    [[-1, 0.33, 0.66, 1], ["Disabled", "33%", "66%", "100%"], 3],
+    [0, 100, 100, 0],
     nil,
-    {}
+    {
+        params ["_value"];
+        0 fadeMusic (_value / 100);
+    }
     ] call CBA_Settings_fnc_init;
 
     [
