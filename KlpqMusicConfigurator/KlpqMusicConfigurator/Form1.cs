@@ -82,8 +82,13 @@ namespace KlpqMusicConfigurator
 
                 cfgMusicConfig += "\n    class " + className + " {\n        sound[] = {\"" + localPath + "\", db+3, 1};\n        tag = \"klpq_musicRadio\";" + theme + "\n        duration = " + duration + ";\n        artist = \"" + artist + "\";\n        title = \"" + title + "\";\n    };";
 
-                cfgSoundsConfig += "\n    class " + className + " {\n        sound[] = {\"" + localPath + "\", db+6, 1, 100};\n        titles[] = {};\n    };";
-                cfgSoundsConfig += "\n    class " + className + "_loud {\n        sound[] = {\"" + localPath + "\", db+12, 1, 500};\n        titles[] = {};\n    };";
+                cfgSoundsConfig += "\n    class " + className + "_vol0 {\n        sound[] = {\"" + localPath + "\", db+0, 1, 100};\n        titles[] = {};\n    };";
+                cfgSoundsConfig += "\n    class " + className + "_vol1 {\n        sound[] = {\"" + localPath + "\", db+3, 1, 100};\n        titles[] = {};\n    };";
+                cfgSoundsConfig += "\n    class " + className + "_vol2 {\n        sound[] = {\"" + localPath + "\", db+6, 1, 100};\n        titles[] = {};\n    };";
+
+                cfgSoundsConfig += "\n    class " + className + "_loud_vol0 {\n        sound[] = {\"" + localPath + "\", db+0, 1, 500};\n        titles[] = {};\n    };";
+                cfgSoundsConfig += "\n    class " + className + "_loud_vol1 {\n        sound[] = {\"" + localPath + "\", db+6, 1, 500};\n        titles[] = {};\n    };";
+                cfgSoundsConfig += "\n    class " + className + "_loud_vol2 {\n        sound[] = {\"" + localPath + "\", db+12, 1, 500};\n        titles[] = {};\n    };";
 
                 progressBar1.PerformStep();
             }

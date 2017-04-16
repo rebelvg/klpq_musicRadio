@@ -50,6 +50,16 @@ if (!klpq_musicRadio_enable) exitWith {};
         !_isPlaying && _backpack getVariable ["klpq_musicRadio_actionAdded", false] && vehicle _vehicle == _vehicle
     }] call ace_interact_menu_fnc_createAction;
     [player, 1, ["ACE_SelfActions", "ACE_Equipment"], _action] call ace_interact_menu_fnc_addActionToObject;
+
+    [
+    "klpq_musicRadio_loudspeakerVolume",
+    "LIST",
+    "Loudspeaker Volume",
+    "KLPQ Music Radio",
+    [[-1, 0, 1, 2], ["Disabled", "Low", "Normal", "High"], 3],
+    nil,
+    {}
+    ] call CBA_Settings_fnc_init;
 };
 
 [] spawn {

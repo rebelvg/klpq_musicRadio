@@ -59,9 +59,9 @@ klpq_musicRadio_fnc_startLoudRadio = {
     if (klpq_musicRadio_nowPlaying == "") exitWith {};
 
     if (_vehicle isKindOf "air") then {
-        [[_hiddenRadio, klpq_musicRadio_nowPlaying + "_loud"], "say3D"] call BIS_fnc_MP;
+        [[_hiddenRadio, klpq_musicRadio_nowPlaying + "_loud"], "klpq_musicRadio_fnc_say3D"] call BIS_fnc_MP;
     } else {
-        [[_hiddenRadio, klpq_musicRadio_nowPlaying], "say3D"] call BIS_fnc_MP;
+        [[_hiddenRadio, klpq_musicRadio_nowPlaying], "klpq_musicRadio_fnc_say3D"] call BIS_fnc_MP;
     };
 };
 
@@ -71,6 +71,16 @@ klpq_musicRadio_fnc_stopLoudRadio = {
     _vehicle setVariable ["klpq_musicRadio_loudRadioIsOn", false, true];
     deleteVehicle (_vehicle getVariable ["klpq_musicRadio_hiddenRadio", objNull]);
 };
+
+klpq_musicRadio_fnc_say3D = {
+    params ["_hiddenRadio", "_classname"];
+
+    if (klpq_musicRadio_loudspeakerVolume == -1) exitWith {};
+
+    _hiddenRadio say3D format ["%1_vol%2", _classname, klpq_musicRadio_loudspeakerVolume];
+};
+
+klpq_musicRadio_fnc_exportSongsList = {};
 
 KK_fnc_arrayShufflePlus = {
     private ["_arr", "_cnt"];
@@ -111,4 +121,8 @@ if (isNil "klpq_musicRadio_radioThemes") then {
 
 if (isNil "klpq_musicRadio_enable") then {
     klpq_musicRadio_enable = true;
+};
+
+if (isNil "klpq_musicRadio_loudspeakerVolume") then {
+    klpq_musicRadio_loudspeakerVolume = 2;
 };
