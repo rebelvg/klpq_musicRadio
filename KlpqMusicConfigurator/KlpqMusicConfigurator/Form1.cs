@@ -80,7 +80,7 @@ namespace KlpqMusicConfigurator
                     theme = "\n        theme = \"" + X.Text.Split(Path.DirectorySeparatorChar)[0] + "\";";
                 }
 
-                cfgMusicConfig += "\n    class " + className + " {\n        sound[] = {\"" + localPath + "\", db+3, 1};\n        tag = \"klpq_musicRadio\";" + theme + "\n        duration = " + duration + ";\n        artist = \"" + artist + "\";\n        title = \"" + title + "\";\n    };";
+                cfgMusicConfig += "\n    class " + className + " {\n        sound[] = {\"" + localPath + "\", db+3, 1};\n        tag = \"klpq_musicRadio_v1\";" + theme + "\n        duration = " + duration + ";\n        artist = \"" + artist + "\";\n        title = \"" + title + "\";\n    };";
 
                 cfgSoundsConfig += "\n    class " + className + "_vol0 {\n        sound[] = {\"" + localPath + "\", db+0, 1, 100};\n        titles[] = {};\n    };";
                 cfgSoundsConfig += "\n    class " + className + "_vol1 {\n        sound[] = {\"" + localPath + "\", db+3, 1, 100};\n        titles[] = {};\n    };";

@@ -47,9 +47,19 @@ if (!klpq_musicRadio_enable) exitWith {};
 
         _isPlaying = _backpack getVariable ["klpq_musicRadio_loudRadioIsOn", false];
 
-        !_isPlaying && _backpack getVariable ["klpq_musicRadio_actionAdded", false] && vehicle _vehicle == _vehicle
+        !_isPlaying && !isNull _backpack && (_backpack getVariable ["klpq_musicRadio_actionAdded", false] || klpq_musicRadio_enableBackpackRadioMP || (klpq_musicRadio_enableBackpackRadioSP && !isMultiplayer)) && vehicle _vehicle == _vehicle
     }] call ace_interact_menu_fnc_createAction;
     [player, 1, ["ACE_SelfActions", "ACE_Equipment"], _action] call ace_interact_menu_fnc_addActionToObject;
+
+    [
+    "klpq_musicRadio_radioVolume",
+    "LIST",
+    "Radio Volume",
+    "KLPQ Music Radio",
+    [[-1, 0.33, 0.66, 1], ["Disabled", "33%", "66%", "100%"], 3],
+    nil,
+    {}
+    ] call CBA_Settings_fnc_init;
 
     [
     "klpq_musicRadio_loudspeakerVolume",
@@ -57,6 +67,16 @@ if (!klpq_musicRadio_enable) exitWith {};
     "Loudspeaker Volume",
     "KLPQ Music Radio",
     [[-1, 0, 1, 2], ["Disabled", "Low", "Normal", "High"], 3],
+    nil,
+    {}
+    ] call CBA_Settings_fnc_init;
+
+    [
+    "klpq_musicRadio_enableBackpackRadioSP",
+    "CHECKBOX",
+    "All Backpacks Can Play Radio (SP Only)",
+    "KLPQ Music Radio",
+    false,
     nil,
     {}
     ] call CBA_Settings_fnc_init;
@@ -69,7 +89,7 @@ if (!klpq_musicRadio_enable) exitWith {};
 
     _musicArray = klpq_musicRadio_radioSongs;
 
-    _musicArray = _musicArray select {getText (configFile >> "CfgMusic" >> _x >> "tag") == "klpq_musicRadio"};
+    _musicArray = _musicArray select {getText (configFile >> "CfgMusic" >> _x >> "tag") == klpq_musicRadio_configTag};
 
     if (count _musicArray == 0) then {
         {
@@ -86,13 +106,13 @@ if (!klpq_musicRadio_enable) exitWith {};
         _musicArray = _musicArray apply {configName _x};
     };
 
-    _musicArray = _musicArray select {getText (configFile >> "CfgMusic" >> _x >> "tag") == "klpq_musicRadio"};
+    _musicArray = _musicArray select {getText (configFile >> "CfgMusic" >> _x >> "tag") == klpq_musicRadio_configTag};
 
     if (count _musicArray == 0) exitWith {};
 
     klpq_musicRadio_radioSongs = _musicArray;
 
-    klpq_musicRadio_startRadioSongs = klpq_musicRadio_startRadioSongs select {getText (configFile >> "CfgMusic" >> _x >> "tag") == "klpq_musicRadio"};
+    klpq_musicRadio_startRadioSongs = klpq_musicRadio_startRadioSongs select {getText (configFile >> "CfgMusic" >> _x >> "tag") == klpq_musicRadio_configTag};
 
     while {true} do {
         _shuffledMusicArray = [_musicArray, 4 * count _musicArray] call KK_fnc_arrayShufflePlus;
