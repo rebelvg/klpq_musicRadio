@@ -33,6 +33,6 @@ Functions.
 call klpq_musicRadio_fnc_exportSongsList; - exports list of configured songs to clipboard.
 
 CBA settings.
-Radio volume - controls music radio volume, only has effect on next song start.
+Radio volume - controls music radio volume, has immediate effect (ace hearing module will reset volume to max, disable hearing module to make it work).
 Loudspeaker volume - controls loudspeaker volume, only has effect on next song start.
-All backpacks can play radio - allows you to use backpack loudspeaker feature in SP.
+All backpacks can play radio (SP only) - allows you to use backpack loudspeaker feature in SP.
