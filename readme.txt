@@ -1,12 +1,24 @@
 KLPQ MUSIC RADIO MOD SOURCES by KLPQ.men
 
+-- Credits
 Rebel - configs, scripting.
 Facel - icons.
 
-Threads.
+-- Threads
 https://forums.bistudio.com/forums/topic/203641-klpq-music-radio/
 
-Usage.
+-- Downloads
+https://github.com/rebelvg/klpq_musicRadio/releases
+
+-- Requirements
+Latest ARMA 3.
+CBA.
+ACE3.
+
+-- Usage
+
+Ingame.
+All actions are available via ACE Interaction.
 
 Variables.
 klpq_musicRadio_enable - bool, enables music radio.
@@ -16,8 +28,8 @@ klpq_musicRadio_radioSongs - array, sets songs for music radio, leave empty for 
 klpq_musicRadio_enableBackpackRadioMP - bool, allows all backpacks to play radio in MP.
 
 Functions.
-0 = [_object, true] call klpq_musicRadio_fnc_addRadio; - adds radio to the object, true to make it play at start.
-0 = [_unit] call klpq_musicRadio_fnc_addBackpackRadio; - adds radio to the backpack of the unit.
+[_object, true] call klpq_musicRadio_fnc_addRadio; - adds radio to the object, true to make it play at start.
+[_unit] call klpq_musicRadio_fnc_addBackpackRadio; - adds radio to the backpack of the unit.
 call klpq_musicRadio_fnc_exportSongsList; - exports list of configured songs to clipboard.
 
 CBA settings.
