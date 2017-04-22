@@ -3,7 +3,7 @@ params ["_vehicle"];
 if (!klpq_musicRadio_enable) exitWith {};
 
 _simType = toLower getText (configFile >> "CfgVehicles" >> typeOf _vehicle >> "simulation");
-if (_simType == "parachute" or _simType == "paraglide") exitWith {};
+if (_simType in ["parachute", "paraglide"]) exitWith {};
 
 if (_vehicle getVariable ["klpq_musicRadio_actionAdded", false]) exitWith {};
 _vehicle setVariable ["klpq_musicRadio_actionAdded", true];
