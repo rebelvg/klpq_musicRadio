@@ -30,7 +30,7 @@ if (!klpq_musicRadio_enable) exitWith {};
 
         _isPlaying = _backpack getVariable ["klpq_musicRadio_loudRadioIsOn", false];
 
-        _isPlaying
+        _isPlaying && !visibleMap
     }] call ace_interact_menu_fnc_createAction;
     [player, 1, ["ACE_SelfActions", "ACE_Equipment"], _action] call ace_interact_menu_fnc_addActionToObject;
 
@@ -40,6 +40,8 @@ if (!klpq_musicRadio_enable) exitWith {};
         _backpack = backpackContainer _vehicle;
 
         [_backpack] spawn klpq_musicRadio_fnc_startLoudRadio;
+
+        [_vehicle] remoteExec ["klpq_musicRadio_fnc_addLoudRadio", 2];
     }, {
         params ["_vehicle", "_player"];
 
@@ -47,7 +49,7 @@ if (!klpq_musicRadio_enable) exitWith {};
 
         _isPlaying = _backpack getVariable ["klpq_musicRadio_loudRadioIsOn", false];
 
-        !_isPlaying && !isNull _backpack && (_backpack getVariable ["klpq_musicRadio_actionAdded", false] || klpq_musicRadio_enableBackpackRadioMP || (klpq_musicRadio_enableBackpackRadioSP && !isMultiplayer)) && vehicle _vehicle == _vehicle
+        !_isPlaying && !isNull _backpack && (_backpack getVariable ["klpq_musicRadio_actionAdded", false] || klpq_musicRadio_enableBackpackRadioMP || (klpq_musicRadio_enableBackpackRadioSP && !isMultiplayer)) && vehicle _vehicle == _vehicle && !visibleMap
     }] call ace_interact_menu_fnc_createAction;
     [player, 1, ["ACE_SelfActions", "ACE_Equipment"], _action] call ace_interact_menu_fnc_addActionToObject;
 

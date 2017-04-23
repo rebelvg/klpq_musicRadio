@@ -52,7 +52,7 @@ _action = ["klpq_musicRadio_action_turnRadioOff", "Turn Radio Off", "klpq_musicR
 
     _isPlaying = _vehicle getVariable ["klpq_musicRadio_radioIsOn", false];
 
-    _isPlaying && driver _vehicle == _player
+    _isPlaying && driver _vehicle == _player && !visibleMap
 }] call ace_interact_menu_fnc_createAction;
 [_vehicle, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;
 
@@ -66,7 +66,7 @@ _action = ["klpq_musicRadio_action_turnRadioOn", "Turn Radio On", "klpq_musicRad
 
     _isPlaying = _vehicle getVariable ["klpq_musicRadio_radioIsOn", false];
 
-    !_isPlaying && driver _vehicle == _player
+    !_isPlaying && driver _vehicle == _player && !visibleMap
 }] call ace_interact_menu_fnc_createAction;
 [_vehicle, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;
 
@@ -79,7 +79,7 @@ _action = ["klpq_musicRadio_action_turnLoudRadioOff", "Turn Loudspeaker Off", "k
 
     _isPlaying = _vehicle getVariable ["klpq_musicRadio_loudRadioIsOn", false];
 
-    _isPlaying && driver _vehicle == _player
+    _isPlaying && driver _vehicle == _player && !visibleMap
 }] call ace_interact_menu_fnc_createAction;
 [_vehicle, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;
 
@@ -93,6 +93,6 @@ _action = ["klpq_musicRadio_action_turnLoudRadioOn", "Turn Loudspeaker On", "klp
 
     _isPlaying = _vehicle getVariable ["klpq_musicRadio_loudRadioIsOn", false];
 
-    !_isPlaying && driver _vehicle == _player
+    !_isPlaying && driver _vehicle == _player && !visibleMap
 }] call ace_interact_menu_fnc_createAction;
 [_vehicle, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;

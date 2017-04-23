@@ -82,6 +82,12 @@ klpq_musicRadio_fnc_say3D = {
     _hiddenRadio say3D format ["%1_vol%2", _classname, klpq_musicRadio_loudspeakerVolume];
 };
 
+klpq_musicRadio_fnc_addLoudRadio = {
+    params ["_object"];
+
+    klpq_musicRadio_loudRadios pushBackUnique _object;
+};
+
 klpq_musicRadio_fnc_exportSongsList = {
     _musicArray = "true" configClasses (configFile >> "CfgMusic");
     _musicArray = _musicArray select {getText (_x >> "tag") == klpq_musicRadio_configTag};

@@ -1,13 +1,11 @@
 params ["_unit"];
 
-if (!isServer) exitWith {};
-
 if (!klpq_musicRadio_enable) exitWith {};
 
-[_unit] spawn {
-    params ["_unit"];
+if (!local _unit) exitWith {};
 
-    waitUntil {time > 0};
+[{time > 0}, {
+    params ["_unit"];
 
     _backpack = backpackContainer _unit;
 
@@ -15,8 +13,6 @@ if (!klpq_musicRadio_enable) exitWith {};
     _backpack setVariable ["klpq_musicRadio_actionAdded", true, true];
 
     _backpack setVariable ["klpq_musicRadio_loudRadioIsOn", false, true];
-
-    klpq_musicRadio_loudRadios pushBack _backpack;
-};
+}, [_unit]] call CBA_fnc_waitUntilAndExecute;
 
 nil
