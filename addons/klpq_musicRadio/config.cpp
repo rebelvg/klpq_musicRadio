@@ -6,7 +6,7 @@ class CfgPatches
         weapons[] = {};
         requiredVersion = 1;
         requiredAddons[] = {"ace_interact_menu"};
-        version = "1.0.2";
+        version = "1.0.3";
     };
 };
 
