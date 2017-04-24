@@ -41,7 +41,7 @@ if (!klpq_musicRadio_enable) exitWith {};
 
         [_backpack] spawn klpq_musicRadio_fnc_startLoudRadio;
 
-        [_vehicle] remoteExec ["klpq_musicRadio_fnc_addLoudRadio", 2];
+        [_backpack] remoteExec ["klpq_musicRadio_fnc_addLoudRadio", 2];
     }, {
         params ["_vehicle", "_player"];
 
