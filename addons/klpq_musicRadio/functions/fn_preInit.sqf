@@ -20,7 +20,7 @@ klpq_musicRadio_fnc_startNewSong = {
 };
 
 klpq_musicRadio_fnc_playSongOnRadio = {
-    _vehicle = _this select 0;
+    params ["_vehicle"];
 
     if (isServer) then {
         _vehicle setVariable ["klpq_musicRadio_radioIsOn", true, true];
@@ -89,8 +89,9 @@ klpq_musicRadio_fnc_addLoudRadio = {
 };
 
 klpq_musicRadio_fnc_exportSongsList = {
-    _musicArray = "true" configClasses (configFile >> "CfgMusic");
-    _musicArray = _musicArray select {getText (_x >> "tag") == klpq_musicRadio_configTag};
+    private _allMusic = "true" configClasses (configFile >> "CfgMusic");
+    _allMusic append ("true" configClasses (missionConfigFile >> "CfgMusic"));
+    _allMusic = _allMusic select {getText (_x >> "tag") == klpq_musicRadio_configTag};
 
     private _addNewLine = {
         params ["_string", "_indent"];
@@ -108,7 +109,7 @@ klpq_musicRadio_fnc_exportSongsList = {
 
     {
         [format ["%1, %2 - %3, theme - %4, duration - %5", configName _x, getText (_x >> "artist"), getText (_x >> "title"), getText (_x >> "theme"), getNumber (_x >> "duration")], 0] call _addNewLine;
-    } forEach _musicArray;
+    } forEach _allMusic;
 
     copyToClipboard _output;
 

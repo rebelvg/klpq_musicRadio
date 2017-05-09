@@ -92,45 +92,38 @@ if (!klpq_musicRadio_enable) exitWith {};
 
     waitUntil {time > 0};
 
-    _musicArray = klpq_musicRadio_radioSongs;
+    private _allMusic = "true" configClasses (configFile >> "CfgMusic");
+    _allMusic append ("true" configClasses (missionConfigFile >> "CfgMusic"));
+    _allMusic = _allMusic select {(getText (_x >> "tag")) == klpq_musicRadio_configTag};
 
-    _musicArray = _musicArray select {getText (configFile >> "CfgMusic" >> _x >> "tag") == klpq_musicRadio_configTag};
+    private _musicArray = _allMusic select {(configName _x) in klpq_musicRadio_radioSongs};
 
     if (count _musicArray == 0) then {
-        {
-            _searchString = format ["getText (_x >> 'theme') == '%1'", _x];
-            _musicArray = _musicArray + (_searchString configClasses (configFile >> "CfgMusic"));
-        } forEach klpq_musicRadio_radioThemes;
-
-        _musicArray = _musicArray apply {configName _x};
+        _musicArray = _allMusic select {(getText (_x >> "theme")) in klpq_musicRadio_radioThemes};
     };
 
     if (count _musicArray == 0) then {
-        _musicArray = "true" configClasses (configFile >> "CfgMusic");
-
-        _musicArray = _musicArray apply {configName _x};
+        _musicArray = _allMusic;
     };
-
-    _musicArray = _musicArray select {getText (configFile >> "CfgMusic" >> _x >> "tag") == klpq_musicRadio_configTag};
 
     if (count _musicArray == 0) exitWith {};
 
     klpq_musicRadio_radioSongs = _musicArray;
 
-    klpq_musicRadio_startRadioSongs = klpq_musicRadio_startRadioSongs select {getText (configFile >> "CfgMusic" >> _x >> "tag") == klpq_musicRadio_configTag};
+    klpq_musicRadio_startRadioSongs = (_allMusic select {(configName _x) in klpq_musicRadio_startRadioSongs});
 
     while {true} do {
         _shuffledMusicArray = [_musicArray, 4 * count _musicArray] call KK_fnc_arrayShufflePlus;
         _shuffledMusicArray = klpq_musicRadio_startRadioSongs + _shuffledMusicArray;
 
         {
-            klpq_musicRadio_nowPlaying = _x;
+            klpq_musicRadio_nowPlaying = configName _x;
             klpq_musicRadio_timeStarted = CBA_missionTime;
 
             publicVariable "klpq_musicRadio_nowPlaying";
             publicVariable "klpq_musicRadio_timeStarted";
 
-            _songLength = getNumber (configFile >> "CfgMusic" >> klpq_musicRadio_nowPlaying >> "duration");
+            _songLength = getNumber (_x >> "duration");
 
             [[], "klpq_musicRadio_fnc_startNewSong"] call BIS_fnc_MP;
 
@@ -142,7 +135,7 @@ if (!klpq_musicRadio_enable) exitWith {};
                 };
             } forEach klpq_musicRadio_loudRadios;
 
-            sleep _songLength;
+            sleep (_songLength + 1);
         } forEach _shuffledMusicArray;
     };
 };
