@@ -103,7 +103,7 @@ if (!klpq_musicRadio_enable) exitWith {};
     };
 
     if (count _musicArray == 0) then {
-        _musicArray = _allMusic;
+        _musicArray = _allMusic select {(getNumber (_x >> "klpq_ignoreTrack")) == 0};
     };
 
     if (count _musicArray == 0) exitWith {};

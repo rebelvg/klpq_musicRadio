@@ -36,10 +36,6 @@ namespace KlpqMusicConfigurator
         {
             richTextBox1.Text = "";
 
-            string finalConfig = "class CfgPatches {\n    class klpq_musicRadio_configs {\n        units[] = {};\n        weapons[] = {};\n        requiredVersion = 1;\n        requiredAddons[] = {};\n    };\n};";
-
-            finalConfig += "\n\n";
-
             string cfgMusicConfig = "";
             string cfgSoundsConfig = "";
 
@@ -53,10 +49,11 @@ namespace KlpqMusicConfigurator
                 string fullPath = path_textBox.Text + Path.DirectorySeparatorChar + X.Text;
                 string className = "klpq_musicRadio_" + await Task.Run(() => GetMD5(fullPath));
                 string localPath = Path.GetFileName(path_textBox.Text) + Path.DirectorySeparatorChar + X.Text;
-                string theme = "";
+                string theme = "no_theme";
                 int duration = 0;
                 string artist = "";
                 string title = "";
+                int isIgnored = 0;
 
                 using (var vorbisStream = await Task.Run(() => new NAudio.Vorbis.VorbisWaveReader(fullPath)))
                 {
@@ -76,11 +73,12 @@ namespace KlpqMusicConfigurator
                 title = Regex.Replace(title, "[^0-9a-zA-Z \\-()',.]", "_");
 
                 if (X.Text.Split(Path.DirectorySeparatorChar).Length > 1)
-                {
-                    theme = "\n        theme = \"" + X.Text.Split(Path.DirectorySeparatorChar)[0] + "\";";
-                }
+                    theme = X.Text.Split(Path.DirectorySeparatorChar)[0];
 
-                cfgMusicConfig += "\n    class " + className + " {\n        sound[] = {\"" + localPath + "\", db+3, 1};\n        tag = \"klpq_musicRadio_v1\";" + theme + "\n        duration = " + duration + ";\n        artist = \"" + artist + "\";\n        title = \"" + title + "\";\n    };";
+                if (listView2.CheckedItems.Cast<ListViewItem>().Select(A => A.Text).Contains(theme))
+                    isIgnored = 1;
+
+                cfgMusicConfig += "\n    class " + className + " {\n        sound[] = {\"" + localPath + "\", db+3, 1};\n        tag = \"klpq_musicRadio_v1\";" + "\n        theme = \"" + theme + "\";" + "\n        duration = " + duration + ";\n        artist = \"" + artist + "\";\n        title = \"" + title + "\";\n        klpq_ignoreTrack = " + isIgnored + ";\n    };";
 
                 cfgSoundsConfig += "\n    class " + className + " {\n        sound[] = {\"" + localPath + "\", db+6, 1, 100};\n        titles[] = {};\n    };";
 
@@ -94,6 +92,10 @@ namespace KlpqMusicConfigurator
 
                 progressBar1.PerformStep();
             }
+
+            string finalConfig = "class CfgPatches {\n    class klpq_musicRadio_configs_" + (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds + " {\n        units[] = {};\n        weapons[] = {};\n        requiredVersion = 1;\n        requiredAddons[] = {};\n    };\n};";
+
+            finalConfig += "\n\n";
 
             finalConfig += "class CfgMusic {\n    tracks[] = {};\n";
 
@@ -122,10 +124,23 @@ namespace KlpqMusicConfigurator
                 List<string> folder_filesArray = Directory.GetFiles(path_textBox.Text, "*.ogg", SearchOption.AllDirectories).Select(x => x.Replace(path_textBox.Text + "\\", "")).ToList();
 
                 listView1.Items.Clear();
+                listView2.Items.Clear();
 
                 foreach (string X in folder_filesArray)
                 {
                     listView1.Items.Add(X);
+                }
+
+                foreach (ListViewItem X in listView1.Items)
+                {
+                    string theme = "no_theme";
+
+
+                    if (X.Text.Split(Path.DirectorySeparatorChar).Length > 1)
+                        theme = X.Text.Split(Path.DirectorySeparatorChar)[0];
+
+                    if (!listView2.Items.Cast<ListViewItem>().Select(A => A.Text).Contains(theme))
+                        listView2.Items.Add(theme);
                 }
             }
         }
