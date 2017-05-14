@@ -5,12 +5,14 @@ klpq_musicRadio_fnc_playMusic = {
     playMusic [klpq_musicRadio_nowPlaying, CBA_missionTime - klpq_musicRadio_timeStarted];
     0 fadeMusic (klpq_musicRadio_radioVolumePercent / 100);
 
-    _artist = getText (configFile >> "CfgMusic" >> klpq_musicRadio_nowPlaying >> "artist");
-    _title = getText (configFile >> "CfgMusic" >> klpq_musicRadio_nowPlaying >> "title");
+    private _artist = getText (configFile >> "CfgMusic" >> klpq_musicRadio_nowPlaying >> "artist");
+    private _title = getText (configFile >> "CfgMusic" >> klpq_musicRadio_nowPlaying >> "title");
 
     if (count _artist == 0 || count _title == 0) exitWith {};
 
-    [parseText format ["<t font='PuristaBold' shadow='2' align='right' size='2.2'>""%1""</t><br/><t shadow='2' align='right' size='2.0'>%2</t>", _title, format ["by %1", _artist]], true, nil, 7, 1, 0] spawn BIS_fnc_textTiles;
+    private _tileSize = linearConversion [100, 10, count (_artist + _title), 1.6, 2.2, true];
+
+    [parseText format ["<t font='PuristaBold' shadow='2' align='right' size='%3'>""%1""</t><br/><t shadow='2' align='right' size='%4'>by %2</t>", _title, _artist, _tileSize, _tileSize - 0.2], [0.75,1.05,1,1], nil, 7, 1, 0] spawn BIS_fnc_textTiles;
 };
 
 klpq_musicRadio_fnc_startNewSong = {
@@ -106,6 +108,25 @@ klpq_musicRadio_fnc_exportSongsList = {
     };
 
     private _output = "";
+
+    private _allThemes = [];
+
+    {
+        private _theme = (getText (_x >> "theme"));
+
+        if (count _theme != 0) then {
+            _allThemes pushBackUnique _theme;
+        };
+    } forEach _allMusic;
+
+    ["Themes.", 0] call _addNewLine;
+
+    {
+        [_x, 0] call _addNewLine;
+    } forEach _allThemes;
+
+    ["", 0] call _addNewLine;
+    ["Tracks.", 0] call _addNewLine;
 
     {
         [format ["%1, %2 - %3, theme - %4, duration - %5", configName _x, getText (_x >> "artist"), getText (_x >> "title"), getText (_x >> "theme"), getNumber (_x >> "duration")], 0] call _addNewLine;

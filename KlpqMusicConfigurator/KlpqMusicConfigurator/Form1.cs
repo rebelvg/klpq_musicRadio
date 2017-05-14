@@ -11,6 +11,7 @@ using System.IO;
 using Ookii.Dialogs.Wpf;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
+using System.Net;
 
 namespace KlpqMusicConfigurator
 {
@@ -19,6 +20,8 @@ namespace KlpqMusicConfigurator
         public Form1()
         {
             InitializeComponent();
+
+            toolTip1.SetToolTip(checkBox1, "Don't generate artist and title tags. Fallback for situations when there's a bad symbol in tags and config crashes the game on launch.");
         }
 
         public string GetMD5(string filename)
@@ -59,18 +62,21 @@ namespace KlpqMusicConfigurator
                 {
                     duration = (int)Math.Round(vorbisStream.TotalTime.TotalSeconds);
 
-                    foreach (string A in vorbisStream.Comments)
+                    if (!checkBox1.Checked)
                     {
-                        if (A.ToLower().StartsWith("artist="))
-                            artist = A.Split('=')[1];
+                        foreach (string A in vorbisStream.Comments)
+                        {
+                            if (A.ToLower().StartsWith("artist="))
+                                artist = A.Split('=')[1];
 
-                        if (A.ToLower().StartsWith("title="))
-                            title = A.Split('=')[1];
+                            if (A.ToLower().StartsWith("title="))
+                                title = A.Split('=')[1];
+                        }
                     }
                 }
 
-                artist = Regex.Replace(artist, "[^0-9a-zA-Z \\-()',.]", "_");
-                title = Regex.Replace(title, "[^0-9a-zA-Z \\-()',.]", "_");
+                artist = WebUtility.HtmlEncode(artist);
+                title = WebUtility.HtmlEncode(title);
 
                 if (X.Text.Split(Path.DirectorySeparatorChar).Length > 1)
                     theme = X.Text.Split(Path.DirectorySeparatorChar)[0];
