@@ -171,7 +171,7 @@ klpq_musicRadio_fnc_exportSongsList = {
     ["Tracks.", 0] call _addNewLine;
 
     {
-        [format ["%1, %2 - %3, theme - %4, duration - %5", configName _x, getText (_x >> "artist"), getText (_x >> "title"), getText (_x >> "theme"), getNumber (_x >> "duration")], 0] call _addNewLine;
+        [format ["%1, %2 - %3, theme - %4, duration - %5, is ignored - %6", configName _x, parseText getText (_x >> "artist"), parseText getText (_x >> "title"), getText (_x >> "theme"), getNumber (_x >> "duration"), getNumber (_x >> "klpq_ignoreTrack")], 0] call _addNewLine;
     } forEach _allMusic;
 
     copyToClipboard _output;
