@@ -85,6 +85,16 @@ if (!klpq_musicRadio_enable) exitWith {};
     nil,
     {}
     ] call CBA_Settings_fnc_init;
+
+    [
+    "klpq_musicRadio_displayTilesOnLoudRadio",
+    "CHECKBOX",
+    "Display Song Tiles For Loudspeakers",
+    "KLPQ Music Radio",
+    true,
+    nil,
+    {}
+    ] call CBA_Settings_fnc_init;
 };
 
 [] spawn {
@@ -113,7 +123,7 @@ if (!klpq_musicRadio_enable) exitWith {};
     klpq_musicRadio_startRadioSongs = (_allMusic select {(configName _x) in klpq_musicRadio_startRadioSongs});
 
     while {true} do {
-        _shuffledMusicArray = [_musicArray, 4 * count _musicArray] call KK_fnc_arrayShufflePlus;
+        private _shuffledMusicArray = [_musicArray, 4 * count _musicArray] call KK_fnc_arrayShufflePlus;
         _shuffledMusicArray = klpq_musicRadio_startRadioSongs + _shuffledMusicArray;
 
         {
@@ -135,7 +145,7 @@ if (!klpq_musicRadio_enable) exitWith {};
                 };
             } forEach klpq_musicRadio_loudRadios;
 
-            sleep (_songLength + 1);
+            sleep (_songLength max 1);
         } forEach _shuffledMusicArray;
     };
 };

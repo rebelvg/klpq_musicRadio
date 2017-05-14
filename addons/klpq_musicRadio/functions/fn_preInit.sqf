@@ -5,14 +5,43 @@ klpq_musicRadio_fnc_playMusic = {
     playMusic [klpq_musicRadio_nowPlaying, CBA_missionTime - klpq_musicRadio_timeStarted];
     0 fadeMusic (klpq_musicRadio_radioVolumePercent / 100);
 
-    private _artist = getText (configFile >> "CfgMusic" >> klpq_musicRadio_nowPlaying >> "artist");
-    private _title = getText (configFile >> "CfgMusic" >> klpq_musicRadio_nowPlaying >> "title");
+    call klpq_musicRadio_fnc_displayTiles;
+};
+
+klpq_musicRadio_fnc_findTrackConfig = {
+    params ["_root"];
+
+    private _trackConfig = configNull;
+
+    if (isClass (configFile >> _root >> klpq_musicRadio_nowPlaying)) then {
+        _trackConfig = configFile >> _root >> klpq_musicRadio_nowPlaying;
+    };
+
+    if (isClass (missionConfigFile >> _root >> klpq_musicRadio_nowPlaying)) then {
+        _trackConfig = missionConfigFile >> _root >> klpq_musicRadio_nowPlaying;
+    };
+
+    _trackConfig
+};
+
+klpq_musicRadio_fnc_displayTiles = {
+    private _trackConfig = ["CfgMusic"] call klpq_musicRadio_fnc_findTrackConfig;
+
+    private _artist = getText (_trackConfig >> "artist");
+    private _title = getText (_trackConfig >> "title");
 
     if (count _artist == 0 || count _title == 0) exitWith {};
 
     private _tileSize = linearConversion [100, 10, count (_artist + _title), 1.6, 2.2, true];
 
-    [parseText format ["<t font='PuristaBold' shadow='2' align='right' size='%3'>""%1""</t><br/><t shadow='2' align='right' size='%4'>by %2</t>", _title, _artist, _tileSize, _tileSize - 0.2], [0.75,1.05,1,1], nil, 7, 1, 0] spawn BIS_fnc_textTiles;
+    private _tilePos = [
+    (safezoneX + safezoneW - 21 * (((safezoneW / safezoneH) min 1.2) / 35)),
+    (safezoneY + safezoneH - 13 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)),
+    20 * (((safezoneW / safezoneH) min 1.2) / 35),
+    10 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)
+    ];
+
+    [parseText format ["<t font='PuristaBold' shadow='2' align='right' size='%3'>""%1""</t><br/><t shadow='2' align='right' size='%4'>by %2</t>", _title, _artist, _tileSize, _tileSize - 0.2], _tilePos, nil, 7, 1, 0] spawn BIS_fnc_textTiles;
 };
 
 klpq_musicRadio_fnc_startNewSong = {
@@ -82,6 +111,19 @@ klpq_musicRadio_fnc_say3D = {
     if (klpq_musicRadio_loudspeakerVolume == -1) exitWith {};
 
     _hiddenRadio say3D format ["%1_vol%2", _classname, klpq_musicRadio_loudspeakerVolume];
+
+    if (!klpq_musicRadio_displayTilesOnLoudRadio) exitWith {};
+
+    private _trackConfig = ["CfgSounds"] call klpq_musicRadio_fnc_findTrackConfig;
+
+    private _cameraPos = positionCameraToWorld [0,0,0];
+
+    private _sound = getArray (_trackConfig >> "sound");
+    _sound params ["", "", "", ["_soundDistance", 0]];
+
+    if (_hiddenRadio distance _cameraPos < (_soundDistance / 3)) then {
+        call klpq_musicRadio_fnc_displayTiles;
+    };
 };
 
 klpq_musicRadio_fnc_addLoudRadio = {
@@ -192,6 +234,10 @@ if (isNil "klpq_musicRadio_enableBackpackRadioSP") then {
 
 if (isNil "klpq_musicRadio_enableBackpackRadioMP") then {
     klpq_musicRadio_enableBackpackRadioMP = false;
+};
+
+if (isNil "klpq_musicRadio_displayTilesOnLoudRadio") then {
+    klpq_musicRadio_displayTilesOnLoudRadio = true;
 };
 
 klpq_musicRadio_configTag = "klpq_musicRadio_v1";
