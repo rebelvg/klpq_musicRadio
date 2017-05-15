@@ -5,27 +5,29 @@ klpq_musicRadio_fnc_playMusic = {
     playMusic [klpq_musicRadio_nowPlaying, CBA_missionTime - klpq_musicRadio_timeStarted];
     0 fadeMusic (klpq_musicRadio_radioVolumePercent / 100);
 
-    call klpq_musicRadio_fnc_displayTiles;
+    [klpq_musicRadio_nowPlaying] call klpq_musicRadio_fnc_displayTiles;
 };
 
 klpq_musicRadio_fnc_findTrackConfig = {
-    params ["_root"];
+    params ["_root", ["_trackName", ""]];
 
     private _trackConfig = configNull;
 
-    if (isClass (configFile >> _root >> klpq_musicRadio_nowPlaying)) then {
-        _trackConfig = configFile >> _root >> klpq_musicRadio_nowPlaying;
+    if (isClass (configFile >> _root >> _trackName)) then {
+        _trackConfig = configFile >> _root >> _trackName;
     };
 
-    if (isClass (missionConfigFile >> _root >> klpq_musicRadio_nowPlaying)) then {
-        _trackConfig = missionConfigFile >> _root >> klpq_musicRadio_nowPlaying;
+    if (isClass (missionConfigFile >> _root >> _trackName)) then {
+        _trackConfig = missionConfigFile >> _root >> _trackName;
     };
 
     _trackConfig
 };
 
 klpq_musicRadio_fnc_displayTiles = {
-    private _trackConfig = ["CfgMusic"] call klpq_musicRadio_fnc_findTrackConfig;
+    params [["_trackName", ""]];
+
+    private _trackConfig = ["CfgMusic", _trackName] call klpq_musicRadio_fnc_findTrackConfig;
 
     private _artist = getText (_trackConfig >> "artist");
     private _title = getText (_trackConfig >> "title");
@@ -77,7 +79,7 @@ klpq_musicRadio_fnc_stopSongOnRadio = {
 klpq_musicRadio_fnc_startLoudRadio = {
     params ["_vehicle"];
 
-    _hiddenRadio = "#particleSource" createVehicle [0, 0, 0];
+    private _hiddenRadio = "#particleSource" createVehicle [0, 0, 0];
 
     [[_hiddenRadio, true], "hideObjectGlobal", false] call BIS_fnc_MP;
     hideObject _hiddenRadio;
@@ -114,7 +116,7 @@ klpq_musicRadio_fnc_say3D = {
 
     if (!klpq_musicRadio_displayTilesOnLoudRadio) exitWith {};
 
-    private _trackConfig = ["CfgSounds"] call klpq_musicRadio_fnc_findTrackConfig;
+    private _trackConfig = ["CfgSounds", klpq_musicRadio_nowPlaying] call klpq_musicRadio_fnc_findTrackConfig;
 
     private _cameraPos = positionCameraToWorld [0,0,0];
 
@@ -122,7 +124,7 @@ klpq_musicRadio_fnc_say3D = {
     _sound params ["", "", "", ["_soundDistance", 0]];
 
     if (_hiddenRadio distance _cameraPos < (_soundDistance / 3)) then {
-        call klpq_musicRadio_fnc_displayTiles;
+        [klpq_musicRadio_nowPlaying] call klpq_musicRadio_fnc_displayTiles;
     };
 };
 
@@ -138,15 +140,15 @@ klpq_musicRadio_fnc_exportSongsList = {
     _allMusic = _allMusic select {getText (_x >> "tag") == klpq_musicRadio_configTag};
 
     private _addNewLine = {
-        params ["_string", "_indent"];
+        params ["_output", "_string", "_indent"];
 
-        _br = toString [13, 10];
+        private _br = toString [13, 10];
 
         for "_i" from 1 to _indent do {
             _output = _output + "    ";
         };
 
-        _output = _output + _string + _br;
+        _output + _string + _br
     };
 
     private _output = "";
@@ -161,17 +163,17 @@ klpq_musicRadio_fnc_exportSongsList = {
         };
     } forEach _allMusic;
 
-    ["Themes.", 0] call _addNewLine;
+    _output = [_output, "Themes.", 0] call _addNewLine;
 
     {
-        [_x, 0] call _addNewLine;
+        _output = [_output, _x, 0] call _addNewLine;
     } forEach _allThemes;
 
-    ["", 0] call _addNewLine;
-    ["Tracks.", 0] call _addNewLine;
+    _output = [_output, "", 0] call _addNewLine;
+    _output = [_output, "Tracks.", 0] call _addNewLine;
 
     {
-        [format ["%1, %2 - %3, theme - %4, duration - %5, is ignored - %6", configName _x, parseText getText (_x >> "artist"), parseText getText (_x >> "title"), getText (_x >> "theme"), getNumber (_x >> "duration"), getNumber (_x >> "klpq_ignoreTrack")], 0] call _addNewLine;
+        _output = [_output, format ["%1, %2 - %3, theme - %4, duration - %5, is ignored - %6", configName _x, parseText getText (_x >> "artist"), parseText getText (_x >> "title"), getText (_x >> "theme"), getNumber (_x >> "duration"), getNumber (_x >> "klpq_ignoreTrack")], 0] call _addNewLine;
     } forEach _allMusic;
 
     copyToClipboard _output;

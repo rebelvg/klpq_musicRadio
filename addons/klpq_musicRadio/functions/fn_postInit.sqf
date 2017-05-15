@@ -12,23 +12,23 @@ if (!klpq_musicRadio_enable) exitWith {};
     player addEventHandler ["GetInMan", {
         params ["_vehicle"];
 
-        _backpack = backpackContainer _vehicle;
+        private _backpack = backpackContainer _vehicle;
 
         [_backpack] spawn klpq_musicRadio_fnc_stopLoudRadio;
     }];
 
-    _action = ["klpq_musicRadio_action_turnLoudRadioOff", "Turn Backpack Speaker Off", "klpq_musicRadio\loud_off.paa", {
+    private _action = ["klpq_musicRadio_action_turnLoudRadioOff", "Turn Backpack Speaker Off", "klpq_musicRadio\loud_off.paa", {
         params ["_vehicle"];
 
-        _backpack = backpackContainer _vehicle;
+        private _backpack = backpackContainer _vehicle;
 
         [_backpack] spawn klpq_musicRadio_fnc_stopLoudRadio;
     }, {
         params ["_vehicle", "_player"];
 
-        _backpack = backpackContainer _vehicle;
+        private _backpack = backpackContainer _vehicle;
 
-        _isPlaying = _backpack getVariable ["klpq_musicRadio_loudRadioIsOn", false];
+        private _isPlaying = _backpack getVariable ["klpq_musicRadio_loudRadioIsOn", false];
 
         _isPlaying && !visibleMap
     }] call ace_interact_menu_fnc_createAction;
@@ -37,7 +37,7 @@ if (!klpq_musicRadio_enable) exitWith {};
     _action = ["klpq_musicRadio_action_turnLoudRadioOn", "Turn Backpack Speaker On", "klpq_musicRadio\loud_on.paa", {
         params ["_vehicle"];
 
-        _backpack = backpackContainer _vehicle;
+        private _backpack = backpackContainer _vehicle;
 
         [_backpack] spawn klpq_musicRadio_fnc_startLoudRadio;
 
@@ -45,9 +45,9 @@ if (!klpq_musicRadio_enable) exitWith {};
     }, {
         params ["_vehicle", "_player"];
 
-        _backpack = backpackContainer _vehicle;
+        private _backpack = backpackContainer _vehicle;
 
-        _isPlaying = _backpack getVariable ["klpq_musicRadio_loudRadioIsOn", false];
+        private _isPlaying = _backpack getVariable ["klpq_musicRadio_loudRadioIsOn", false];
 
         !_isPlaying && !isNull _backpack && (_backpack getVariable ["klpq_musicRadio_actionAdded", false] || klpq_musicRadio_enableBackpackRadioMP || (klpq_musicRadio_enableBackpackRadioSP && !isMultiplayer)) && vehicle _vehicle == _vehicle && !visibleMap
     }] call ace_interact_menu_fnc_createAction;
@@ -133,7 +133,7 @@ if (!klpq_musicRadio_enable) exitWith {};
             publicVariable "klpq_musicRadio_nowPlaying";
             publicVariable "klpq_musicRadio_timeStarted";
 
-            _songLength = getNumber (_x >> "duration");
+            private _songLength = getNumber (_x >> "duration");
 
             [[], "klpq_musicRadio_fnc_startNewSong"] call BIS_fnc_MP;
 

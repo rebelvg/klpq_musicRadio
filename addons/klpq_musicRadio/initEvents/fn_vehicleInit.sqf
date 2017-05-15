@@ -2,7 +2,7 @@ params ["_vehicle"];
 
 if (!klpq_musicRadio_enable) exitWith {};
 
-_simType = toLower getText (configFile >> "CfgVehicles" >> typeOf _vehicle >> "simulation");
+private _simType = toLower getText (configFile >> "CfgVehicles" >> typeOf _vehicle >> "simulation");
 if (_simType in ["parachute", "paraglide"]) exitWith {};
 
 if (_vehicle getVariable ["klpq_musicRadio_actionAdded", false]) exitWith {};
@@ -25,8 +25,7 @@ if (isServer) then {
 };
 
 _vehicle addEventHandler ["GetIn", {
-    _vehicle = _this select 0;
-    _playerEntered = _this select 2;
+    params ["_vehicle", "", "_playerEntered"];
 
     if (_playerEntered == player) then {
         if (_vehicle getVariable ["klpq_musicRadio_radioIsOn", false]) then {
@@ -36,21 +35,21 @@ _vehicle addEventHandler ["GetIn", {
 }];
 
 _vehicle addEventHandler ["GetOut", {
-    _playerExited = _this select 2;
+    params ["_vehicle", "", "_playerExited"];
 
     if (_playerExited == player) then {
         playMusic "";
     };
 }];
 
-_action = ["klpq_musicRadio_action_turnRadioOff", "Turn Radio Off", "klpq_musicRadio\music_off.paa", {
+private _action = ["klpq_musicRadio_action_turnRadioOff", "Turn Radio Off", "klpq_musicRadio\music_off.paa", {
     params ["_vehicle"];
 
     [[_vehicle], "klpq_musicRadio_fnc_stopSongOnRadio"] call BIS_fnc_MP;
 }, {
     params ["_vehicle", "_player"];
 
-    _isPlaying = _vehicle getVariable ["klpq_musicRadio_radioIsOn", false];
+    private _isPlaying = _vehicle getVariable ["klpq_musicRadio_radioIsOn", false];
 
     _isPlaying && driver _vehicle == _player && !visibleMap
 }] call ace_interact_menu_fnc_createAction;
@@ -64,7 +63,7 @@ _action = ["klpq_musicRadio_action_turnRadioOn", "Turn Radio On", "klpq_musicRad
 }, {
     params ["_vehicle", "_player"];
 
-    _isPlaying = _vehicle getVariable ["klpq_musicRadio_radioIsOn", false];
+    private _isPlaying = _vehicle getVariable ["klpq_musicRadio_radioIsOn", false];
 
     !_isPlaying && driver _vehicle == _player && !visibleMap
 }] call ace_interact_menu_fnc_createAction;
@@ -77,7 +76,7 @@ _action = ["klpq_musicRadio_action_turnLoudRadioOff", "Turn Loudspeaker Off", "k
 }, {
     params ["_vehicle", "_player"];
 
-    _isPlaying = _vehicle getVariable ["klpq_musicRadio_loudRadioIsOn", false];
+    private _isPlaying = _vehicle getVariable ["klpq_musicRadio_loudRadioIsOn", false];
 
     _isPlaying && driver _vehicle == _player && !visibleMap
 }] call ace_interact_menu_fnc_createAction;
@@ -91,7 +90,7 @@ _action = ["klpq_musicRadio_action_turnLoudRadioOn", "Turn Loudspeaker On", "klp
 }, {
     params ["_vehicle", "_player"];
 
-    _isPlaying = _vehicle getVariable ["klpq_musicRadio_loudRadioIsOn", false];
+    private _isPlaying = _vehicle getVariable ["klpq_musicRadio_loudRadioIsOn", false];
 
     !_isPlaying && driver _vehicle == _player && !visibleMap
 }] call ace_interact_menu_fnc_createAction;

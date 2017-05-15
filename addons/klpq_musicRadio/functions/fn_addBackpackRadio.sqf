@@ -7,7 +7,7 @@ if (!local _unit) exitWith {};
 [{time > 0}, {
     params ["_unit"];
 
-    _backpack = backpackContainer _unit;
+    private _backpack = backpackContainer _unit;
 
     if (_backpack getVariable ["klpq_musicRadio_actionAdded", false]) exitWith {};
     _backpack setVariable ["klpq_musicRadio_actionAdded", true, true];
