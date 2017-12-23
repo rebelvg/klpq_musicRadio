@@ -36,7 +36,7 @@ Mod supports both vanilla and ACE interaction systems.
 - ```[_unit] call klpq_musicRadio_fnc_addBackpackRadio;``` - adds radio to the backpack of the unit.
 - ```call klpq_musicRadio_fnc_exportSongsList;``` - exports list of configured songs to clipboard.
 
-### CBA settings
+### CBA Settings
 - Radio Volume - controls music radio volume, has immediate effect (ace hearing module will reset volume to the max, disable hearing module to make it work).
 - Loudspeaker Volume - controls loudspeaker volume, only has effect on next song start.
 - All Backpacks Can Play Radio (SP Only) - allows you to use backpack loudspeaker feature in SP.
