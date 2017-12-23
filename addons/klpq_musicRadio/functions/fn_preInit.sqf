@@ -194,6 +194,38 @@ KK_fnc_arrayShufflePlus = {
     _arr
 };
 
+if !(isClass (configFile >> "CfgPatches" >> "ace_interact_menu")) then {
+    ace_interact_menu_fnc_createAction = {
+        params ["_handle", "_actionName", "_icon", "_statement", "_condition"];
+
+        [_handle, _actionName, _icon, _statement, _condition]
+    };
+
+    ace_interact_menu_fnc_addActionToObject = {
+        params ["_object", "_type", "_path", "_action"];
+        _action params ["_handle", "_actionName", "_icon", "_statement", "_condition"];
+
+        _conditionString = format ["%1", _condition];
+
+        _actionCondition = format ["[_target, _this] call %1;", _conditionString];
+
+        if (_object == player && _type == 1) then {
+            _actionCondition = "if (_target != player) exitWith {false};" + _actionCondition;
+        };
+
+        _object addAction [_actionName, _statement, nil, 0, false, true, "", _actionCondition, 5, false];
+
+        if (_object == player && local _object) then {
+            [_object, "Respawn", {
+                params ["_unit"];
+                _thisArgs params ["_actionName", "_statement", "_actionCondition"];
+
+                _unit addAction [_actionName, _statement, nil, 0, false, true, "", _actionCondition, 5, false];
+            }, [_actionName, _statement, _actionCondition]] call CBA_fnc_addBISEventHandler;
+        };
+    };
+};
+
 if (isNil "klpq_musicRadio_loudRadios") then {
     klpq_musicRadio_loudRadios = [];
 };

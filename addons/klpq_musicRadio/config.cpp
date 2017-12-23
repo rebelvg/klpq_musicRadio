@@ -5,8 +5,8 @@ class CfgPatches
         units[] = {};
         weapons[] = {};
         requiredVersion = 1;
-        requiredAddons[] = {"ace_interact_menu"};
-        version = "1.0.7";
+        requiredAddons[] = {};
+        version = "1.0.8";
     };
 };
 
