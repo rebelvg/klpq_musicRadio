@@ -1,21 +1,23 @@
-KLPQ MUSIC RADIO MOD SOURCES by KLPQ.men
+# KLPQ MUSIC RADIO MOD SOURCES by KLPQ.men
 
--- Credits
+## Credits
 Rebel - configs, scripting.
 Facel - icons.
 
--- Threads
+## Threads
 https://forums.bistudio.com/forums/topic/203641-klpq-music-radio/
 
--- Downloads
+## Downloads
 https://github.com/rebelvg/klpq_musicRadio/releases
 
--- Requirements
+### Requirements
 Latest ARMA 3.
 CBA.
+
+### Optionals
 ACE3.
 
--- Usage
+## Usage
 
 Ingame.
 All actions are available via ACE Interaction.
