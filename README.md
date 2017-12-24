@@ -5,7 +5,9 @@
 - https://www.youtube.com/watch?v=9JMifXQhf4g
 
 This is a configurable music radio mod.
+
 It provides an ability to play music inside of the vehicles. How it works in-game and how to configure it for your community is explained in the videos above.
+
 Mod itself doesn't come with any music. It's up to you to add anything you want.
 
 ## Credits
