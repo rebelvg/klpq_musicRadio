@@ -30,7 +30,7 @@ Mod itself doesn't come with any music. It's up to you to add anything you want.
 
 ## Usage
 
-### Ingame
+### In-Game
 Mod supports both vanilla and ACE interaction systems.
 
 ### Variables
