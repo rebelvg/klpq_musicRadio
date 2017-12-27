@@ -22,11 +22,11 @@ Mod itself doesn't come with any music. It's up to you to add anything you want.
 ## Dependencies
 
 ### Requirements
-- Latest ARMA 3.
-- CBA.
+- Latest ARMA 3
+- CBA
 
 ### Optionals
-- ACE3.
+- ACE3
 
 ## Usage
 
