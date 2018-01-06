@@ -12,6 +12,7 @@ using Ookii.Dialogs.Wpf;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
 using System.Net;
+using System.Diagnostics;
 
 namespace KlpqMusicConfigurator
 {
@@ -118,7 +119,7 @@ namespace KlpqMusicConfigurator
             return finalConfig;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             VistaFolderBrowserDialog chosenFolder = new VistaFolderBrowserDialog();
             chosenFolder.Description = "Select folder...";
@@ -126,6 +127,12 @@ namespace KlpqMusicConfigurator
             if (chosenFolder.ShowDialog().Value)
             {
                 path_textBox.Text = chosenFolder.SelectedPath;
+
+                if (!File.Exists(path_textBox.Text + "\\config.cpp"))
+                {
+                    MessageBox.Show("There should be a config.cpp file in the root of the folder.");
+                    return;
+                }
 
                 List<string> folder_filesArray = Directory.GetFiles(path_textBox.Text, "*.ogg", SearchOption.AllDirectories).Select(x => x.Replace(path_textBox.Text + "\\", "")).ToList();
 
@@ -141,13 +148,16 @@ namespace KlpqMusicConfigurator
                 {
                     string theme = "no_theme";
 
-
                     if (X.Text.Split(Path.DirectorySeparatorChar).Length > 1)
                         theme = X.Text.Split(Path.DirectorySeparatorChar)[0];
 
                     if (!listView2.Items.Cast<ListViewItem>().Select(A => A.Text).Contains(theme))
                         listView2.Items.Add(theme);
                 }
+
+                string finalConfig = await GenerateConfig();
+
+                richTextBox1.Text = finalConfig;
             }
         }
 
@@ -162,6 +172,65 @@ namespace KlpqMusicConfigurator
         {
             if (richTextBox1.Text.Length != 0)
                 Clipboard.SetText(richTextBox1.Text);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (!Directory.Exists(path_textBox.Text))
+            {
+                MessageBox.Show("You have to select the folder first.");
+                return;
+            }
+
+            string addonBuilderPath = KlpqMusicConfigurator.Properties.Settings.Default.addonBuilderPath;
+
+            if (!File.Exists(addonBuilderPath))
+            {
+                OpenFileDialog selectFile = new OpenFileDialog();
+
+                selectFile.Title = "Select AddonBuilder.exe";
+                selectFile.Filter = "Executable File (.exe) | *.exe";
+                selectFile.RestoreDirectory = true;
+
+                if (selectFile.ShowDialog() == DialogResult.OK)
+                {
+                    addonBuilderPath = selectFile.FileName;
+
+                    KlpqMusicConfigurator.Properties.Settings.Default.addonBuilderPath = selectFile.FileName;
+                    KlpqMusicConfigurator.Properties.Settings.Default.Save();
+                }
+                else
+                {
+                    MessageBox.Show("Packing canceled.");
+                    return;
+                }
+            }
+
+            List<string> commandArgs = new List<string>() { };
+
+            commandArgs.Add("\"" + path_textBox.Text + "\"");
+
+            VistaFolderBrowserDialog chosenFolder = new VistaFolderBrowserDialog();
+            chosenFolder.Description = "Select the folder where to place the packed pbo...";
+
+            if (chosenFolder.ShowDialog().Value)
+            {
+                commandArgs.Add("\"" + chosenFolder.SelectedPath + "\"");
+            }
+            else
+            {
+                MessageBox.Show("Packing canceled.");
+                return;
+            }
+
+            commandArgs.Add("-clear");
+            commandArgs.Add("-packonly");
+
+            Process myProcess = new Process();
+
+            myProcess.StartInfo.FileName = addonBuilderPath;
+            myProcess.StartInfo.Arguments = String.Join(" ", commandArgs);
+            myProcess.Start();
         }
     }
 }

@@ -22,5 +22,17 @@ namespace KlpqMusicConfigurator.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string addonBuilderPath {
+            get {
+                return ((string)(this["addonBuilderPath"]));
+            }
+            set {
+                this["addonBuilderPath"] = value;
+            }
+        }
     }
 }
