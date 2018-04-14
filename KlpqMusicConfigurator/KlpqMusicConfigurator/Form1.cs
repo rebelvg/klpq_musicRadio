@@ -119,7 +119,7 @@ namespace KlpqMusicConfigurator
             return finalConfig;
         }
 
-        private async void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             VistaFolderBrowserDialog chosenFolder = new VistaFolderBrowserDialog();
             chosenFolder.Description = "Select folder...";
@@ -154,10 +154,6 @@ namespace KlpqMusicConfigurator
                     if (!listView2.Items.Cast<ListViewItem>().Select(A => A.Text).Contains(theme))
                         listView2.Items.Add(theme);
                 }
-
-                string finalConfig = await GenerateConfig();
-
-                richTextBox1.Text = finalConfig;
             }
         }
 
@@ -171,7 +167,9 @@ namespace KlpqMusicConfigurator
         private void button3_Click(object sender, EventArgs e)
         {
             if (richTextBox1.Text.Length != 0)
+            {
                 Clipboard.SetText(richTextBox1.Text);
+            }
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -206,16 +204,20 @@ namespace KlpqMusicConfigurator
                 }
             }
 
-            List<string> commandArgs = new List<string>() { };
+            if (richTextBox1.Text.Length == 0)
+            {
+                MessageBox.Show("You have to generate a config first.");
+                return;
+            }
 
-            commandArgs.Add("\"" + path_textBox.Text + "\"");
+            string exportFolder;
 
             VistaFolderBrowserDialog chosenFolder = new VistaFolderBrowserDialog();
-            chosenFolder.Description = "Select the folder where to place the packed pbo...";
+            chosenFolder.Description = "Select the folder where to place the packed pbos...";
 
             if (chosenFolder.ShowDialog().Value)
             {
-                commandArgs.Add("\"" + chosenFolder.SelectedPath + "\"");
+                exportFolder = chosenFolder.SelectedPath;
             }
             else
             {
@@ -223,14 +225,50 @@ namespace KlpqMusicConfigurator
                 return;
             }
 
-            commandArgs.Add("-clear");
-            commandArgs.Add("-packonly");
+            string tempFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), new DirectoryInfo(path_textBox.Text).Name) + "_config";
 
-            Process myProcess = new Process();
+            Directory.CreateDirectory(tempFolderPath);
 
-            myProcess.StartInfo.FileName = addonBuilderPath;
-            myProcess.StartInfo.Arguments = String.Join(" ", commandArgs);
-            myProcess.Start();
+            File.WriteAllText(Path.Combine(tempFolderPath, "config.cpp"), richTextBox1.Text);
+
+            List<string> commandArgsConfig = new List<string>() { };
+
+            commandArgsConfig.Add("\"" + tempFolderPath + "\"");
+            commandArgsConfig.Add("\"" + exportFolder + "\"");
+            commandArgsConfig.Add("-clear");
+            commandArgsConfig.Add("-packonly");
+
+            Process builderProcessConfig = new Process();
+
+            builderProcessConfig.StartInfo.FileName = addonBuilderPath;
+            builderProcessConfig.StartInfo.Arguments = String.Join(" ", commandArgsConfig);
+            builderProcessConfig.Start();
+
+            List<string> commandArgsFiles = new List<string>() { };
+
+            commandArgsFiles.Add("\"" + path_textBox.Text + "\"");
+            commandArgsFiles.Add("\"" + exportFolder + "\"");
+            commandArgsFiles.Add("-clear");
+            commandArgsFiles.Add("-packonly");
+
+            Process builderProcessFiles = new Process();
+
+            builderProcessFiles.StartInfo.FileName = addonBuilderPath;
+            builderProcessFiles.StartInfo.Arguments = String.Join(" ", commandArgsFiles);
+            builderProcessFiles.Start();
+        }
+
+        private async void button2_Click_1(object sender, EventArgs e)
+        {
+            if (!File.Exists(path_textBox.Text + "\\config.cpp"))
+            {
+                MessageBox.Show("There should be a config.cpp file in the root of the folder.");
+                return;
+            }
+
+            string finalConfig = await GenerateConfig();
+
+            richTextBox1.Text = finalConfig;
         }
     }
 }
