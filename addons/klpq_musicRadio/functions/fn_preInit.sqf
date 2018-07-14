@@ -37,10 +37,10 @@ klpq_musicRadio_fnc_displayTiles = {
     private _tileSize = linearConversion [100, 10, count (_artist + _title), 1.6, 2.2, true];
 
     private _tilePos = [
-    (safezoneX + safezoneW - 21 * (((safezoneW / safezoneH) min 1.2) / 35)),
-    (safezoneY + safezoneH - 13 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)),
-    20 * (((safezoneW / safezoneH) min 1.2) / 35),
-    10 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)
+        (safezoneX + safezoneW - 21 * (((safezoneW / safezoneH) min 1.2) / 35)),
+        (safezoneY + safezoneH - 13 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)),
+        20 * (((safezoneW / safezoneH) min 1.2) / 35),
+        10 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)
     ];
 
     [parseText format ["<t font='PuristaBold' shadow='2' align='right' size='%3'>""%1""</t><br/><t shadow='2' align='right' size='%4'>by %2</t>", _title, _artist, _tileSize, _tileSize - 0.2], _tilePos, nil, 7, 1, 0] spawn BIS_fnc_textTiles;
