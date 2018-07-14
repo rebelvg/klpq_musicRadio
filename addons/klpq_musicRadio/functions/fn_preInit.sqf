@@ -186,7 +186,7 @@ klpq_musicRadio_fnc_addRadioRemote = {
 
     if (isNull _object) exitWith {};
 
-    private "_action";
+    private ["_action"];
 
     _action = ["klpq_musicRadio_action_turnLoudRadioOff", "Turn Radio Off", "klpq_musicRadio\loud_off.paa", {
         params ["_object"];

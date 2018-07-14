@@ -42,6 +42,9 @@ _vehicle addEventHandler ["GetOut", {
     };
 }];
 
+_action = ["klpq_musicRadio_action_radioActions", "Music Radio", "", {}, {true}] call ace_interact_menu_fnc_createAction;
+[_vehicle, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;
+
 private _action = ["klpq_musicRadio_action_turnRadioOff", "Turn Radio Off", "klpq_musicRadio\music_off.paa", {
     params ["_vehicle"];
 
@@ -53,7 +56,7 @@ private _action = ["klpq_musicRadio_action_turnRadioOff", "Turn Radio Off", "klp
 
     _isPlaying && driver _vehicle == _player && !visibleMap
 }] call ace_interact_menu_fnc_createAction;
-[_vehicle, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;
+[_vehicle, 1, ["ACE_SelfActions", "klpq_musicRadio_action_radioActions"], _action] call ace_interact_menu_fnc_addActionToObject;
 
 _action = ["klpq_musicRadio_action_turnRadioOn", "Turn Radio On", "klpq_musicRadio\music_on.paa", {
     params ["_vehicle"];
@@ -67,7 +70,7 @@ _action = ["klpq_musicRadio_action_turnRadioOn", "Turn Radio On", "klpq_musicRad
 
     !_isPlaying && driver _vehicle == _player && !visibleMap
 }] call ace_interact_menu_fnc_createAction;
-[_vehicle, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;
+[_vehicle, 1, ["ACE_SelfActions", "klpq_musicRadio_action_radioActions"], _action] call ace_interact_menu_fnc_addActionToObject;
 
 _action = ["klpq_musicRadio_action_turnLoudRadioOff", "Turn Loudspeaker Off", "klpq_musicRadio\loud_off.paa", {
     params ["_vehicle"];
@@ -80,7 +83,7 @@ _action = ["klpq_musicRadio_action_turnLoudRadioOff", "Turn Loudspeaker Off", "k
 
     _isPlaying && driver _vehicle == _player && !visibleMap
 }] call ace_interact_menu_fnc_createAction;
-[_vehicle, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;
+[_vehicle, 1, ["ACE_SelfActions", "klpq_musicRadio_action_radioActions"], _action] call ace_interact_menu_fnc_addActionToObject;
 
 _action = ["klpq_musicRadio_action_turnLoudRadioOn", "Turn Loudspeaker On", "klpq_musicRadio\loud_on.paa", {
     params ["_vehicle"];
@@ -94,4 +97,4 @@ _action = ["klpq_musicRadio_action_turnLoudRadioOn", "Turn Loudspeaker On", "klp
 
     !_isPlaying && driver _vehicle == _player && !visibleMap
 }] call ace_interact_menu_fnc_createAction;
-[_vehicle, 1, ["ACE_SelfActions"], _action] call ace_interact_menu_fnc_addActionToObject;
+[_vehicle, 1, ["ACE_SelfActions", "klpq_musicRadio_action_radioActions"], _action] call ace_interact_menu_fnc_addActionToObject;
