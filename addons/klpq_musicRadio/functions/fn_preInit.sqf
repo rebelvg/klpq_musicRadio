@@ -121,16 +121,16 @@ klpq_musicRadio_fnc_say3D = {
 
     if (klpq_musicRadio_loudspeakerVolume == -1) exitWith {};
 
-    _hiddenRadio say3D [format ["%1_vol%2", _classname, klpq_musicRadio_loudspeakerVolume], false, CBA_missionTime - klpq_musicRadio_timeStarted];
-
-    if (!klpq_musicRadio_displayTilesOnLoudRadio) exitWith {};
-
     private _trackConfig = ["CfgSounds", klpq_musicRadio_nowPlaying] call klpq_musicRadio_fnc_findTrackConfig;
-
-    private _cameraPos = positionCameraToWorld [0,0,0];
 
     private _sound = getArray (_trackConfig >> "sound");
     _sound params ["", "", "", ["_soundDistance", 0]];
+
+    _hiddenRadio say3D [format ["%1_vol%2", _classname, klpq_musicRadio_loudspeakerVolume], _soundDistance, 1, false, CBA_missionTime - klpq_musicRadio_timeStarted];
+
+    if (!klpq_musicRadio_displayTilesOnLoudRadio) exitWith {};
+
+    private _cameraPos = positionCameraToWorld [0,0,0];
 
     if (_hiddenRadio distance _cameraPos < (_soundDistance / 3)) then {
         [klpq_musicRadio_nowPlaying] call klpq_musicRadio_fnc_displayTiles;
