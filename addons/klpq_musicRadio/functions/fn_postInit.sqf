@@ -73,7 +73,9 @@ if (!klpq_musicRadio_enable) exitWith {};
     "KLPQ Music Radio",
     [[-1, 0, 1, 2], ["Disabled", "Low", "Normal", "High"], 3],
     nil,
-    {}
+    {
+        [] call klpq_musicRadio_fnc_resetLoudSpeakerVolume;
+    }
     ] call CBA_Settings_fnc_init;
 
     [

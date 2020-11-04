@@ -107,6 +107,15 @@ klpq_musicRadio_fnc_stopLoudRadio = {
     deleteVehicle (_vehicle getVariable ["klpq_musicRadio_hiddenRadio", objNull]);
 };
 
+klpq_musicRadio_fnc_resetLoudSpeakerVolume = {
+    private _allPlayingLoudRadios = (allMissionObjects "All") select { _x getVariable ["klpq_musicRadio_loudRadioIsOn", false] };
+
+    {
+        [_x] call klpq_musicRadio_fnc_stopLoudRadio;
+        [_x] call klpq_musicRadio_fnc_startLoudRadio;
+    } forEach _allPlayingLoudRadios;
+};
+
 klpq_musicRadio_fnc_say3D = {
     params ["_hiddenRadio", "_classname"];
 
