@@ -112,7 +112,7 @@ klpq_musicRadio_fnc_say3D = {
 
     if (klpq_musicRadio_loudspeakerVolume == -1) exitWith {};
 
-    _hiddenRadio say3D format ["%1_vol%2", _classname, klpq_musicRadio_loudspeakerVolume];
+    _hiddenRadio say3D [format ["%1_vol%2", _classname, klpq_musicRadio_loudspeakerVolume], false, CBA_missionTime - klpq_musicRadio_timeStarted];
 
     if (!klpq_musicRadio_displayTilesOnLoudRadio) exitWith {};
 
