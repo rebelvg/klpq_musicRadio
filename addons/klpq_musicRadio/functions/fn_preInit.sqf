@@ -46,74 +46,58 @@ klpq_musicRadio_fnc_displayTiles = {
     [parseText format ["<t font='PuristaBold' shadow='2' align='right' size='%3'>""%1""</t><br/><t shadow='2' align='right' size='%4'>by %2</t>", _title, _artist, _tileSize, _tileSize - 0.2], _tilePos, nil, 7, 1, 0] spawn BIS_fnc_textTiles;
 };
 
-klpq_musicRadio_fnc_startNewSong = {
-    if ((vehicle player) getVariable ['klpq_musicRadio_radioIsOn', false]) then {
+klpq_musicRadio_fnc_startSong = {
+    params ["_object"];
+
+    if (player in crew _object) then {
         call klpq_musicRadio_fnc_playMusic;
+    } else {
+        [_object] call klpq_musicRadio_fnc_startRadioPositional;
     };
 };
 
-klpq_musicRadio_fnc_playSongOnRadio = {
-    params ["_vehicle"];
+klpq_musicRadio_fnc_stopSong = {
+    params ["_object"];
 
-    if (isServer) then {
-        _vehicle setVariable ["klpq_musicRadio_radioIsOn", true, true];
-    };
-
-    if (player in crew _vehicle) then {
-        call klpq_musicRadio_fnc_playMusic;
-    };
-};
-
-klpq_musicRadio_fnc_stopSongOnRadio = {
-    params ["_vehicle"];
-
-    if (isServer) then {
-        _vehicle setVariable ["klpq_musicRadio_radioIsOn", false, true];
-    };
-
-    if (player in crew _vehicle) then {
+    if (player in crew _object) then {
         playMusic "";
     };
+
+    [_object] call klpq_musicRadio_fnc_stopRadioPositional;
 };
 
-klpq_musicRadio_fnc_startLoudRadio = {
-    params ["_vehicle"];
+klpq_musicRadio_fnc_startRadioPositional = {
+    params ["_object"];
 
-    private _hiddenRadio = "#particleSource" createVehicle [0, 0, 0];
+    private _hiddenRadio = "#particleSource" createVehicleLocal [0, 0, 0];
 
-    [[_hiddenRadio, true], "hideObjectGlobal", false] call BIS_fnc_MP;
     hideObject _hiddenRadio;
     _hiddenRadio allowDamage false;
 
-    _hiddenRadio setPosATL getPosATL _vehicle;
-    _hiddenRadio attachTo [_vehicle, [0, 0, 0]];
-    _vehicle setVariable ["klpq_musicRadio_hiddenRadio", _hiddenRadio, true];
-
-    _vehicle setVariable ["klpq_musicRadio_loudRadioIsOn", true, true];
+    _hiddenRadio setPosATL getPosATL _object;
+    _hiddenRadio attachTo [_object, [0, 0, 0]];
+    _object setVariable ["klpq_musicRadio_hiddenRadioLocal", _hiddenRadio, true];
 
     if (klpq_musicRadio_nowPlaying == "") exitWith {};
 
-    if (_vehicle isKindOf "air") then {
-        [[_hiddenRadio, klpq_musicRadio_nowPlaying + "_loud"], "klpq_musicRadio_fnc_say3D"] call BIS_fnc_MP;
+    if (_object isKindOf "air") then {
+        [_hiddenRadio, klpq_musicRadio_nowPlaying + "_loud"] call klpq_musicRadio_fnc_say3D;
     } else {
-        [[_hiddenRadio, klpq_musicRadio_nowPlaying], "klpq_musicRadio_fnc_say3D"] call BIS_fnc_MP;
+        [_hiddenRadio, klpq_musicRadio_nowPlaying] call klpq_musicRadio_fnc_say3D;
     };
 };
 
-klpq_musicRadio_fnc_stopLoudRadio = {
-    params ["_vehicle"];
+klpq_musicRadio_fnc_stopRadioPositional = {
+    params ["_object"];
 
-    _vehicle setVariable ["klpq_musicRadio_loudRadioIsOn", false, true];
-    deleteVehicle (_vehicle getVariable ["klpq_musicRadio_hiddenRadio", objNull]);
+    deleteVehicle (_object getVariable ["klpq_musicRadio_hiddenRadioLocal", objNull]);
 };
 
 klpq_musicRadio_fnc_resetLoudSpeakerVolume = {
-    private _allPlayingLoudRadios = (allMissionObjects "All") select { _x getVariable ["klpq_musicRadio_loudRadioIsOn", false] };
-
     {
-        [_x] call klpq_musicRadio_fnc_stopLoudRadio;
-        [_x] call klpq_musicRadio_fnc_startLoudRadio;
-    } forEach _allPlayingLoudRadios;
+        [_x] call klpq_musicRadio_fnc_stopRadioPositional;
+        [_x] call klpq_musicRadio_fnc_startRadioPositional;
+    } forEach klpq_musicRadio_activeRadios;
 };
 
 klpq_musicRadio_fnc_say3D = {
@@ -135,12 +119,6 @@ klpq_musicRadio_fnc_say3D = {
     if (_hiddenRadio distance _cameraPos < (_soundDistance / 3)) then {
         [klpq_musicRadio_nowPlaying] call klpq_musicRadio_fnc_displayTiles;
     };
-};
-
-klpq_musicRadio_fnc_addLoudRadio = {
-    params ["_object"];
-
-    klpq_musicRadio_loudRadios pushBackUnique _object;
 };
 
 klpq_musicRadio_fnc_exportSongsList = {
@@ -190,40 +168,42 @@ klpq_musicRadio_fnc_exportSongsList = {
     hintSilent "List was exported to your clipboard.";
 };
 
-klpq_musicRadio_fnc_addRadioRemote = {
+klpq_musicRadio_fnc_addRadioAction = {
     params ["_object"];
 
     if (isNull _object) exitWith {};
 
     private ["_action"];
 
-    _action = ["klpq_musicRadio_action_turnLoudRadioOff", "Turn Radio Off", "klpq_musicRadio\loud_off.paa", {
+    private _actionOff = ["klpq_musicRadio_action_turnLoudRadioOff", "Turn Radio Off", "klpq_musicRadio\loud_off.paa", {
         params ["_object"];
 
-        [_object] spawn klpq_musicRadio_fnc_stopLoudRadio;
+        [_object] remoteExec ["klpq_musicRadio_fnc_unregisterRadio", 2];
+
+        [_object] remoteExec ["klpq_musicRadio_fnc_stopSong"];
     }, {
         params ["_object"];
 
-        private _isPlaying = _object getVariable ["klpq_musicRadio_loudRadioIsOn", false];
+        private _isPlaying = _object getVariable ["klpq_musicRadio_radioIsOn", false];
 
         _isPlaying
     }] call ace_interact_menu_fnc_createAction;
+    [_object, 0, ["ACE_MainActions"], _actionOff] call ace_interact_menu_fnc_addActionToObject;
 
-    [_object, 0, ["ACE_MainActions"], _action] call ace_interact_menu_fnc_addActionToObject;
-
-    _action = ["klpq_musicRadio_action_turnLoudRadioOn", "Turn Radio On", "klpq_musicRadio\loud_on.paa", {
+    private _actionOn = ["klpq_musicRadio_action_turnLoudRadioOn", "Turn Radio On", "klpq_musicRadio\loud_on.paa", {
         params ["_object"];
 
-        [_object] spawn klpq_musicRadio_fnc_startLoudRadio;
+        [_object] remoteExec ["klpq_musicRadio_fnc_registerRadio", 2];
+
+        [_object] remoteExec ["klpq_musicRadio_fnc_startSong"];
     }, {
         params ["_object"];
 
-        private _isPlaying = _object getVariable ["klpq_musicRadio_loudRadioIsOn", false];
+        private _isPlaying = _object getVariable ["klpq_musicRadio_radioIsOn", false];
 
         !_isPlaying
     }] call ace_interact_menu_fnc_createAction;
-
-    [_object, 0, ["ACE_MainActions"], _action] call ace_interact_menu_fnc_addActionToObject;
+    [_object, 0, ["ACE_MainActions"], _actionOn] call ace_interact_menu_fnc_addActionToObject;
 };
 
 KK_fnc_arrayShufflePlus = {
@@ -271,8 +251,32 @@ if !(isClass (configFile >> "CfgPatches" >> "ace_interact_menu")) then {
     };
 };
 
-if (isNil "klpq_musicRadio_loudRadios") then {
-    klpq_musicRadio_loudRadios = [];
+klpq_musicRadio_fnc_registerRadio = {
+    params ["_object"];
+
+    if (!isServer) exitWith {};
+
+    _object setVariable ["klpq_musicRadio_radioIsOn", true, true];
+
+    klpq_musicRadio_activeRadios pushBackUnique _object;
+
+    publicVariable "klpq_musicRadio_activeRadios";
+};
+
+klpq_musicRadio_fnc_unregisterRadio = {
+    params ["_object"];
+
+    if (!isServer) exitWith {};
+
+    _object setVariable ["klpq_musicRadio_radioIsOn", false, true];
+
+    klpq_musicRadio_activeRadios = klpq_musicRadio_activeRadios - [_object];
+
+    publicVariable "klpq_musicRadio_activeRadios";
+};
+
+if (isNil "klpq_musicRadio_radios") then {
+    klpq_musicRadio_activeRadios = [];
 };
 
 if (isNil "klpq_musicRadio_timeStarted") then {
