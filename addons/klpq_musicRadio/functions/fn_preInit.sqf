@@ -49,7 +49,7 @@ klpq_musicRadio_fnc_displayTiles = {
 klpq_musicRadio_fnc_startSong = {
     params ["_object"];
 
-    if (player in crew _object) then {
+    if ([player, _object] call klpq_musicRadio_fnc_shouldPlayInteriorRadio) then {
         call klpq_musicRadio_fnc_playMusic;
     } else {
         [_object] call klpq_musicRadio_fnc_startRadioPositional;
@@ -59,7 +59,7 @@ klpq_musicRadio_fnc_startSong = {
 klpq_musicRadio_fnc_stopSong = {
     params ["_object"];
 
-    if (player in crew _object) then {
+    if ([player, _object] call klpq_musicRadio_fnc_shouldPlayInteriorRadio) then {
         playMusic "";
     };
 
@@ -98,6 +98,12 @@ klpq_musicRadio_fnc_resetLoudSpeakerVolume = {
         [_x] call klpq_musicRadio_fnc_stopRadioPositional;
         [_x] call klpq_musicRadio_fnc_startRadioPositional;
     } forEach klpq_musicRadio_activeRadios;
+};
+
+klpq_musicRadio_fnc_shouldPlayInteriorRadio = {
+    params ["_unit", "_vehicle"];
+
+    _unit in crew _vehicle
 };
 
 klpq_musicRadio_fnc_say3D = {
