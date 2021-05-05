@@ -62,9 +62,9 @@ if (!klpq_musicRadio_enable) exitWith {};
 
         if (_vehicle getVariable ["klpq_musicRadio_radioIsOn", false]) then {
             call klpq_musicRadio_fnc_playMusic;
-
-            [_vehicle] call klpq_musicRadio_fnc_stopRadioPositional;
         };
+
+        [_vehicle] call klpq_musicRadio_fnc_stopRadioPositional;
     }];
 
     player addEventHandler ["GetOutMan", {
@@ -72,9 +72,9 @@ if (!klpq_musicRadio_enable) exitWith {};
 
         if (_vehicle getVariable ["klpq_musicRadio_radioIsOn", false]) then {
             [_vehicle] call klpq_musicRadio_fnc_startRadioPositional;
-
-            playMusic "";
         };
+
+        playMusic "";
     }];
 
     [
@@ -169,9 +169,7 @@ if (!klpq_musicRadio_enable) exitWith {};
                 };
             } forEach klpq_musicRadio_activeRadios;
 
-            // sleep (_songLength max 1);
-
-            sleep 30;
+            sleep (_songLength max 1);
         } forEach _shuffledMusicArray;
     };
 };
