@@ -96,7 +96,10 @@ klpq_musicRadio_fnc_stopRadioPositional = {
 klpq_musicRadio_fnc_resetLoudSpeakerVolume = {
     {
         [_x] call klpq_musicRadio_fnc_stopRadioPositional;
-        [_x] call klpq_musicRadio_fnc_startRadioPositional;
+
+        if (![player, _object] call klpq_musicRadio_fnc_shouldPlayInteriorRadio) then {
+            [_x] call klpq_musicRadio_fnc_startRadioPositional;
+        };
     } forEach klpq_musicRadio_activeRadios;
 };
 
