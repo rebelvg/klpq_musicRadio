@@ -12,7 +12,7 @@ if (!local _unit) exitWith {};
     if (_backpack getVariable ["klpq_musicRadio_actionAdded", false]) exitWith {};
     _backpack setVariable ["klpq_musicRadio_actionAdded", true, true];
 
-    _backpack setVariable ["klpq_musicRadio_loudRadioIsOn", false, true];
+    [_backpack] remoteExec ["klpq_musicRadio_fnc_unregisterRadio", 2];
 }, [_unit]] call CBA_fnc_waitUntilAndExecute;
 
 nil
