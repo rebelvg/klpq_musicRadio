@@ -76,7 +76,7 @@ klpq_musicRadio_fnc_startRadioPositional = {
 
     _hiddenRadio setPosATL getPosATL _object;
     _hiddenRadio attachTo [_object, [0, 0, 0]];
-    _object setVariable ["klpq_musicRadio_hiddenRadioLocal", _hiddenRadio, true];
+    _object setVariable ["klpq_musicRadio_hiddenRadioLocal", _hiddenRadio];
 
     if (klpq_musicRadio_nowPlaying == "") exitWith {};
 
