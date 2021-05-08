@@ -78,6 +78,17 @@ if (!klpq_musicRadio_enable) exitWith {};
     }];
 
     [
+    "klpq_musicRadio_enable",
+    "CHECKBOX",
+    "Enable Mod",
+    "KLPQ Music Radio",
+    true,
+    nil,
+    {},
+    true
+    ] call CBA_Settings_fnc_init;
+
+    [
     "klpq_musicRadio_radioVolumePercent",
     "SLIDER",
     "Radio Volume",
@@ -105,7 +116,17 @@ if (!klpq_musicRadio_enable) exitWith {};
     [
     "klpq_musicRadio_enableBackpackRadioSP",
     "CHECKBOX",
-    "All Backpacks Can Play Radio (SP Only)",
+    "All Backpacks Can Play Radio (SP)",
+    "KLPQ Music Radio",
+    true,
+    nil,
+    {}
+    ] call CBA_Settings_fnc_init;
+
+    [
+    "klpq_musicRadio_enableBackpackRadioMP",
+    "CHECKBOX",
+    "All Backpacks Can Play Radio (MP)",
     "KLPQ Music Radio",
     false,
     nil,

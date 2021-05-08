@@ -321,7 +321,7 @@ if (isNil "klpq_musicRadio_loudspeakerVolume") then {
 };
 
 if (isNil "klpq_musicRadio_enableBackpackRadioSP") then {
-    klpq_musicRadio_enableBackpackRadioSP = false;
+    klpq_musicRadio_enableBackpackRadioSP = true;
 };
 
 if (isNil "klpq_musicRadio_enableBackpackRadioMP") then {
