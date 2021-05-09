@@ -1,5 +1,3 @@
-missionnamespace setVariable ['vn_jukebox_enable', false];
-
 [] spawn {
   if (!hasInterface) exitWith {};
 
