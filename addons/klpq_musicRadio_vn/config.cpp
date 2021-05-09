@@ -41,7 +41,7 @@ class CfgMusic {
     class klpq_musicRadio_18c42bf1a458046697ad17752b7c8aa2 {
         sound[] = {"\vn\music_f_vietnam\radiomusic\vn_drmm_song_os_01.ogg", db+3, 1};
         tag = "klpq_musicRadio_v1";
-        theme = "no_theme";
+        theme = "vn_dlc";
         duration = 165;
         artist = "Adam Bailey";
         title = "Trippin";
@@ -50,7 +50,7 @@ class CfgMusic {
     class klpq_musicRadio_b2d8ddde9980651f22a3c999387e13d2 {
         sound[] = {"\vn\music_f_vietnam\radiomusic\vn_drmm_song_os_02.ogg", db+3, 1};
         tag = "klpq_musicRadio_v1";
-        theme = "no_theme";
+        theme = "vn_dlc";
         duration = 182;
         artist = "Adam Bailey";
         title = "Up here looking down";
@@ -59,7 +59,7 @@ class CfgMusic {
     class klpq_musicRadio_4a8a0b9e41c699cbef9d13d734c38080 {
         sound[] = {"\vn\music_f_vietnam\radiomusic\vn_drmm_song_os_03.ogg", db+3, 1};
         tag = "klpq_musicRadio_v1";
-        theme = "no_theme";
+        theme = "vn_dlc";
         duration = 207;
         artist = "Adam Bailey";
         title = "Drafted";
@@ -68,7 +68,7 @@ class CfgMusic {
     class klpq_musicRadio_6b36570cbe9e2e9a758dc5209988c25d {
         sound[] = {"\vn\music_f_vietnam\radiomusic\vn_drmm_song_os_04.ogg", db+3, 1};
         tag = "klpq_musicRadio_v1";
-        theme = "no_theme";
+        theme = "vn_dlc";
         duration = 180;
         artist = "Adam Bailey";
         title = "Unsung heroes";
@@ -77,7 +77,7 @@ class CfgMusic {
     class klpq_musicRadio_0a311e529cf9e893a89e1d8cf7630795 {
         sound[] = {"\vn\music_f_vietnam\radiomusic\vn_drmm_song_os_05.ogg", db+3, 1};
         tag = "klpq_musicRadio_v1";
-        theme = "no_theme";
+        theme = "vn_dlc";
         duration = 197;
         artist = "Adam Bailey";
         title = "Route 9";
@@ -86,7 +86,7 @@ class CfgMusic {
     class klpq_musicRadio_73dd3982a036d939b79b2d9ae3103a0a {
         sound[] = {"\vn\music_f_vietnam\radiomusic\vn_drmm_song_os_06.ogg", db+3, 1};
         tag = "klpq_musicRadio_v1";
-        theme = "no_theme";
+        theme = "vn_dlc";
         duration = 165;
         artist = "Adam Bailey";
         title = "Blues for Suzy";
@@ -95,7 +95,7 @@ class CfgMusic {
     class klpq_musicRadio_30def021cf4b5702e0b4ab80e73bd64b {
         sound[] = {"\vn\music_f_vietnam\radiomusic\vn_drmm_song_os_07.ogg", db+3, 1};
         tag = "klpq_musicRadio_v1";
-        theme = "no_theme";
+        theme = "vn_dlc";
         duration = 201;
         artist = "Adam Bailey";
         title = "Voodoo girl";
@@ -104,7 +104,7 @@ class CfgMusic {
     class klpq_musicRadio_fcb52bc298ace234e57d2234a9667623 {
         sound[] = {"\vn\music_f_vietnam\radiomusic\vn_drmm_song_os_08.ogg", db+3, 1};
         tag = "klpq_musicRadio_v1";
-        theme = "no_theme";
+        theme = "vn_dlc";
         duration = 183;
         artist = "Adam Bailey";
         title = "Tequila highway";
@@ -113,7 +113,7 @@ class CfgMusic {
     class klpq_musicRadio_9de8b06708943e71f9acd5f0347636c6 {
         sound[] = {"\vn\music_f_vietnam\radiomusic\vn_drmm_song_os_09.ogg", db+3, 1};
         tag = "klpq_musicRadio_v1";
-        theme = "no_theme";
+        theme = "vn_dlc";
         duration = 165;
         artist = "Adam Bailey";
         title = "There it is";
@@ -122,7 +122,7 @@ class CfgMusic {
     class klpq_musicRadio_707b5447e1e29173c82586a027b25f0a {
         sound[] = {"\vn\music_f_vietnam\radiomusic\vn_drmm_song_os_10.ogg", db+3, 1};
         tag = "klpq_musicRadio_v1";
-        theme = "no_theme";
+        theme = "vn_dlc";
         duration = 176;
         artist = "Adam Bailey";
         title = "Kitty bar blues";
@@ -131,7 +131,7 @@ class CfgMusic {
     class klpq_musicRadio_164fe4f11ea75b0ada0075d5f326ad29 {
         sound[] = {"\vn\music_f_vietnam\radiomusic\vn_drmm_song_os_11.ogg", db+3, 1};
         tag = "klpq_musicRadio_v1";
-        theme = "no_theme";
+        theme = "vn_dlc";
         duration = 173;
         artist = "Adam Bailey";
         title = "Fire in the sky demo";
@@ -140,7 +140,7 @@ class CfgMusic {
     class klpq_musicRadio_b626b3373ae7cd4a48a1d7d4cf696524 {
         sound[] = {"\vn\music_f_vietnam\radiomusic\vn_drmm_song_os_12.ogg", db+3, 1};
         tag = "klpq_musicRadio_v1";
-        theme = "no_theme";
+        theme = "vn_dlc";
         duration = 246;
         artist = "Adam Bailey";
         title = "Freedom bird";
@@ -149,7 +149,7 @@ class CfgMusic {
     class klpq_musicRadio_c2a26de75bd737dd4d1a8c1ce6605e00 {
         sound[] = {"\vn\music_f_vietnam\radiomusic\vn_drmm_song_os_13.ogg", db+3, 1};
         tag = "klpq_musicRadio_v1";
-        theme = "no_theme";
+        theme = "vn_dlc";
         duration = 159;
         artist = "Adam Bailey";
         title = "Don&#39;t cry baby";
@@ -158,7 +158,7 @@ class CfgMusic {
     class klpq_musicRadio_abcb85d9fbbdfe8fd091bdddbc972e21 {
         sound[] = {"\vn\music_f_vietnam\radiomusic\vn_drmm_song_os_14.ogg", db+3, 1};
         tag = "klpq_musicRadio_v1";
-        theme = "no_theme";
+        theme = "vn_dlc";
         duration = 190;
         artist = "Adam Bailey";
         title = "Jungle boots";
