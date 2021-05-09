@@ -114,12 +114,14 @@ klpq_musicRadio_fnc_say3D = {
 
     if (klpq_musicRadio_loudspeakerVolume == -1) exitWith {};
 
-    private _trackConfig = ["CfgSounds", klpq_musicRadio_nowPlaying] call klpq_musicRadio_fnc_findTrackConfig;
+    private _fullTrackClass = format ["%1_vol%2", _classname, klpq_musicRadio_loudspeakerVolume];
+
+    private _trackConfig = ["CfgSounds", _fullTrackClass] call klpq_musicRadio_fnc_findTrackConfig;
 
     private _sound = getArray (_trackConfig >> "sound");
-    _sound params ["", "", "", ["_soundDistance", 0]];
+    _sound params ["", "", "", ["_soundDistance", 100]];
 
-    _hiddenRadio say3D [format ["%1_vol%2", _classname, klpq_musicRadio_loudspeakerVolume], _soundDistance, 1, false, CBA_missionTime - klpq_musicRadio_timeStarted];
+    _hiddenRadio say3D [_fullTrackClass, _soundDistance, 1, false, CBA_missionTime - klpq_musicRadio_timeStarted];
 
     if (!klpq_musicRadio_displayTilesOnLoudRadio) exitWith {};
 
