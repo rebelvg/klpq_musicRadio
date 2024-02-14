@@ -1,4 +1,4 @@
-# KLPQ MUSIC RADIO MOD by KLPQ.men
+# FSH MUSIC RADIO MOD by oGRiZe modded from KLPQ MUSIC RADIO MOD by KLPQ.men
 
 ## Overview
 - https://www.youtube.com/watch?v=SfBJ06N7N6k
@@ -16,8 +16,8 @@ Mod itself doesn't come with any music. It's up to you to add anything you want.
 - https://forums.bistudio.com/forums/topic/203641-klpq-music-radio/
 
 ## Downloads
-- https://github.com/rebelvg/klpq_musicRadio/releases
-- http://steamcommunity.com/sharedfiles/filedetails/?id=1241545493
+- KLPQ MUSIC RADIO MOD by KLPQ.men https://github.com/rebelvg/klpq_musicRadio/releases
+- KLPQ MUSIC RADIO MOD by KLPQ.men http://steamcommunity.com/sharedfiles/filedetails/?id=1241545493
 
 ## Dependencies
 
