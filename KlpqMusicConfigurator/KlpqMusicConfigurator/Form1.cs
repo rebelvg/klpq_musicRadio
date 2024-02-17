@@ -51,7 +51,7 @@ namespace KlpqMusicConfigurator
             foreach (ListViewItem X in listView1.Items)
             {
                 string fullPath = path_textBox.Text + Path.DirectorySeparatorChar + X.Text;
-                string className = "klpq_musicRadio_" + await Task.Run(() => GetMD5(fullPath));
+                string className = ""songs_" + await Task.Run(() => GetMD5(fullPath));
                 string localPath = Path.GetFileName(path_textBox.Text) + Path.DirectorySeparatorChar + X.Text;
                 string theme = "no_theme";
                 int duration = 0;
@@ -83,11 +83,9 @@ namespace KlpqMusicConfigurator
                     theme = X.Text.Split(Path.DirectorySeparatorChar)[0];
 
                 if (listView2.CheckedItems.Cast<ListViewItem>().Select(A => A.Text).Contains(theme))
-                    isIgnored = 1;
 
                 cfgMusicConfig += "\n    class " + className + " {\n        sound[] = {\"" + localPath + "\", db+3, 1};\n        tag = \"klpq_musicRadio_v1\";" + "\n        theme = \"" + theme + "\";" + "\n        duration = " + duration + ";\n        artist = \"" + artist + "\";\n        title = \"" + title + "\";\n        klpq_ignoreTrack = " + isIgnored + ";\n    };";
 
-                cfgSoundsConfig += "\n    class " + className + " {\n        sound[] = {\"" + localPath + "\", db+6, 1, 100};\n        titles[] = {};\n    };";
 
                 cfgSoundsConfig += "\n    class " + className + "_vol0 {\n        sound[] = {\"" + localPath + "\", db+0, 1, 100};\n        titles[] = {};\n    };";
                 cfgSoundsConfig += "\n    class " + className + "_vol1 {\n        sound[] = {\"" + localPath + "\", db+3, 1, 100};\n        titles[] = {};\n    };";
@@ -102,7 +100,7 @@ namespace KlpqMusicConfigurator
 
             string finalConfig = "class CfgPatches {\n    class klpq_musicRadio_configs_" + (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds + " {\n        units[] = {};\n        weapons[] = {};\n        requiredVersion = 1;\n        requiredAddons[] = {};\n    };\n};";
 
-            finalConfig += "\n\n";
+            finalConfig += "class CfgRadioStations {\r\n\tclass radio_"+(Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds + " {\r\n\t\tname = '\"" + radio + "\"';\r\n\t\tprogram[] = {comedy,cfm,chat,song,cfm,song,comedy,cfm,chat,song,cfm,song};\r\n\t\tdebug = 0;\r\n\t\tSpeed = 1;\r\n\t\tclass chat {\r\n\t\t\ttracks[] = {};\r\n\t\t\ttypes[] = {chat};\r\n\t\t\tthemes[] = {weebfm};\r\n\t\t};\r\n\t\tclass cfm {\r\n\t\t\ttracks[] = {};\r\n\t\t\ttypes[] = {sfx};\r\n\t\t\tthemes[] = {weebfm};\r\n\t\t};\r\n\t\tclass weebfm {\r\n\t\t\ttracks[] = {};\r\n\t\t\ttypes[] = {weebfm};\r\n\t\t\tthemes[] = {weebfm};\r\n\t\t};\r\n\t\tclass song {\r\n\t\t\ttracks[] = {};\r\n\t\t\ttypes[] = {song};\r\n\t\t\tthemes[] = {My Playlist xx};\r\n\t\t};\r\n\t};\r\n};\r\n\r\n";
 
             finalConfig += "class CfgMusic {\n    tracks[] = {};\n";
 
