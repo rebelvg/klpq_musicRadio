@@ -180,6 +180,10 @@ if (!klpq_musicRadio_enable) exitWith {};
             publicVariable "klpq_musicRadio_nowPlaying";
             publicVariable "klpq_musicRadio_timeStarted";
 
+            [klpq_musicRadio_nowPlaying] remoteExec ["preloadSound", 0, "klpq_musicRadio_jip_queue_id"];
+
+            sleep 1;
+
             private _songLength = getNumber (_x >> "duration");
 
             {
