@@ -1,4 +1,4 @@
-# KLPQ MUSIC RADIO MOD by KLPQ.men
+# KLPQ MUSIC RADIO MOD by KLPQ.io
 
 ## Overview
 - https://www.youtube.com/watch?v=SfBJ06N7N6k
