@@ -37,10 +37,10 @@ klpq_musicRadio_fnc_displayTiles = {
     private _tileSize = linearConversion [100, 10, count (_artist + _title), 1.6, 2.2, true];
 
     private _tilePos = [
-        (safezoneX + safezoneW - 21 * (((safezoneW / safezoneH) min 1.2) / 35)),
-        (safezoneY + safezoneH - 13 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)),
-        20 * (((safezoneW / safezoneH) min 1.2) / 35),
-        10 * ((((safezoneW / safezoneH) min 1.2) / 1.2) / 25)
+        (safeZoneX + safeZoneW - 21 * (((safeZoneW / safeZoneH) min 1.2) / 35)),
+        (safeZoneY + safeZoneH - 13 * ((((safeZoneW / safeZoneH) min 1.2) / 1.2) / 25)),
+        20 * (((safeZoneW / safeZoneH) min 1.2) / 35),
+        10 * ((((safeZoneW / safeZoneH) min 1.2) / 1.2) / 25)
     ];
 
     [parseText format ["<t font='PuristaBold' shadow='2' align='right' size='%3'>""%1""</t><br/><t shadow='2' align='right' size='%4'>by %2</t>", _title, _artist, _tileSize, _tileSize - 0.2], _tilePos, nil, 7, 1, 0] spawn BIS_fnc_textTiles;
@@ -186,7 +186,7 @@ klpq_musicRadio_fnc_addRadioAction = {
 
     private ["_action"];
 
-    private _actionOff = ["klpq_musicRadio_action_turnLoudRadioOff", "Turn Radio Off", "klpq_musicRadio\loud_off.paa", {
+    private _actionOff = ["klpq_musicRadio_action_turnLoudRadioOff", "Turn Radio Off", "klpq_music_radio\loud_off.paa", {
         params ["_object"];
 
         [_object] remoteExec ["klpq_musicRadio_fnc_unregisterRadio", 2];
@@ -201,7 +201,7 @@ klpq_musicRadio_fnc_addRadioAction = {
     }] call ace_interact_menu_fnc_createAction;
     [_object, 0, ["ACE_MainActions"], _actionOff] call ace_interact_menu_fnc_addActionToObject;
 
-    private _actionOn = ["klpq_musicRadio_action_turnLoudRadioOn", "Turn Radio On", "klpq_musicRadio\loud_on.paa", {
+    private _actionOn = ["klpq_musicRadio_action_turnLoudRadioOn", "Turn Radio On", "klpq_music_radio\loud_on.paa", {
         params ["_object"];
 
         [_object] remoteExec ["klpq_musicRadio_fnc_registerRadio", 2];

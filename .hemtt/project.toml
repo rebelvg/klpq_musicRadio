@@ -1,0 +1,22 @@
+name = "KLPQ Music Radio"
+prefix = "klpq"
+
+[properties]
+author = "Rebel"
+url = "https://github.com/rebelvg"
+
+[files]
+include = [
+    "mod.cpp",
+    "mod.paa",
+]
+exclude = [
+  "README.md",
+  "examples"
+]
+
+[version]
+major = 1
+minor = 1
+patch = 1
+build = 0

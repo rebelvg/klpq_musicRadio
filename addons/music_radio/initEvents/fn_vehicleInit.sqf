@@ -22,7 +22,7 @@ if (isServer) then {
     }];
 };
 
-private _actionOff = ["klpq_musicRadio_action_turnRadioOff", "Turn Radio Off", "klpq_musicRadio\music_off.paa", {
+private _actionOff = ["klpq_musicRadio_action_turnRadioOff", "Turn Radio Off", "klpq_music_radio\music_off.paa", {
     params ["_vehicle"];
 
     [_vehicle] remoteExec ["klpq_musicRadio_fnc_unregisterRadio", 2];
@@ -37,7 +37,7 @@ private _actionOff = ["klpq_musicRadio_action_turnRadioOff", "Turn Radio Off", "
 }] call ace_interact_menu_fnc_createAction;
 [_vehicle, 1, ["ACE_SelfActions"], _actionOff] call ace_interact_menu_fnc_addActionToObject;
 
-private _actionOn = ["klpq_musicRadio_action_turnRadioOn", "Turn Radio On", "klpq_musicRadio\music_on.paa", {
+private _actionOn = ["klpq_musicRadio_action_turnRadioOn", "Turn Radio On", "klpq_music_radio\music_on.paa", {
     params ["_vehicle"];
 
     [_vehicle] remoteExec ["klpq_musicRadio_fnc_registerRadio", 2];

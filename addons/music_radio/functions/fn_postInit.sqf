@@ -19,7 +19,7 @@ if (!klpq_musicRadio_enable) exitWith {};
         [_backpack] remoteExec ["klpq_musicRadio_fnc_stopSong"];
     }];
 
-    private _actionOff = ["klpq_musicRadio_action_turnLoudRadioOff", "Turn Backpack Speaker Off", "klpq_musicRadio\loud_off.paa", {
+    private _actionOff = ["klpq_musicRadio_action_turnLoudRadioOff", "Turn Backpack Speaker Off", "klpq_music_radio\loud_off.paa", {
         params ["_unit"];
 
         private _backpack = backpackContainer _unit;
@@ -38,7 +38,7 @@ if (!klpq_musicRadio_enable) exitWith {};
     }] call ace_interact_menu_fnc_createAction;
     [player, 1, ["ACE_SelfActions", "ACE_Equipment"], _actionOff] call ace_interact_menu_fnc_addActionToObject;
 
-    private _actionOn = ["klpq_musicRadio_action_turnLoudRadioOn", "Turn Backpack Speaker On", "klpq_musicRadio\loud_on.paa", {
+    private _actionOn = ["klpq_musicRadio_action_turnLoudRadioOn", "Turn Backpack Speaker On", "klpq_music_radio\loud_on.paa", {
         params ["_unit"];
 
         private _backpack = backpackContainer _unit;
