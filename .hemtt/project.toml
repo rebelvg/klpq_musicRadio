@@ -8,11 +8,10 @@ url = "https://github.com/rebelvg"
 [files]
 include = [
     "mod.cpp",
-    "mod.paa",
+    "mod.paa"
 ]
 exclude = [
-  "README.md",
-  "examples"
+  "README.md"
 ]
 
 [version]
