@@ -2,7 +2,7 @@ class klpq_musicRadio
 {
     class functions
     {
-        file = "klpq_music_radio\functions";
+        file = "z\klpq\addons\music_radio\functions";
 
         class preInit {
             preInit = 1;
@@ -22,7 +22,7 @@ class klpq_musicRadio
 
     class initEvents
     {
-        file = "klpq_music_radio\initEvents";
+        file = "z\klpq\addons\music_radio\initEvents";
 
         class vehicleInit {
             recompile = 1;

@@ -1,5 +1,6 @@
 name = "KLPQ Music Radio"
 prefix = "klpq"
+mainprefix = "z"
 
 [properties]
 author = "Rebel"
@@ -19,3 +20,18 @@ major = 1
 minor = 1
 patch = 2
 build = 0
+
+[hemtt.launch.default]
+workshop = [
+  "450814997" # CBA
+]
+presets = []
+dlc = []
+optionals = []
+parameters = [
+    "-skipIntro",
+    "-noSplash",
+    "-showScriptErrors",
+    "-debug",
+    "-filePatching"
+]
